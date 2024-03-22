@@ -2,20 +2,22 @@
 import { useAuthStore } from "../store/auth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { Product } from "../interfaces/product";
 
 const { isAuthenticated, token } = useAuthStore();
 const router = useRouter();
 
-let error = ref(false);
 let loading = ref(false);
 let errorMessage = ref("");
-let product = {
+let product: Product = {
+  id: 0,
+  sellerId: 0,
   name: "",
   description: "",
   category: "",
   originalPrice: 0,
   pictureUrl: "",
-  endDate: "",
+  endDate: ""
 };
 
 if (!isAuthenticated.value) {
@@ -23,7 +25,6 @@ if (!isAuthenticated.value) {
 }
 
 function addProduct() {
-  error.value = false;
   errorMessage.value = "";
   loading.value = true;
 
@@ -59,7 +60,6 @@ function addProduct() {
     });
 }
 
-// router.push({ name: "Product", params: { productId: 'TODO } });
 </script>
 
 <template>
@@ -68,8 +68,8 @@ function addProduct() {
   <div class="row justify-content-center">
     <div class="col-md-6">
       <form @submit.prevent="addProduct">
-        <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error != false">
-          Une erreur s'est produite {{ error }}
+        <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage != ''">
+          Une erreur s'est produite {{ errorMessage }}
         </div>
 
         <div class="mb-3">
