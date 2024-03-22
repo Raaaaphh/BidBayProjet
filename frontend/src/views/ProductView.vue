@@ -2,6 +2,7 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
+import { Product } from "../interfaces/product";
 
 const { isAuthenticated, isAdmin, userData, token } = useAuthStore();
 
@@ -10,12 +11,51 @@ const router = useRouter();
 
 const productId = ref(route.params.productId);
 
+function getProduct(): Product | null | undefined {
+
+  if (!productId.value) {
+    return null;
+  }
+
+  fetch(`http://localhost:3000/api/products/${productId.value}`).then((response) => {
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
+  });
+}
+
+
+const countdown = computed(() => {
+  const product = getProduct();
+
+  if (!product) {
+    return "";
+  }
+
+
+  const endDate = new Date(product.endDate).getTime();
+  const now = new Date().getTime();
+  const diff = endDate - now;
+
+  if (diff <= 0) {
+    return "Terminée";
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  return `${days} jours, ${hours} heures, ${minutes} minutes et ${seconds} secondes`;
+});
+
 /**
  * @param {number|string|Date|VarDate} date
  */
-function formatDate(date) {
+function formatDate(date: string | number | Date) {
   const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(date).toLocaleDateString("fr-FR", options);
+  return new Date(date).toLocaleDateString("fr-FR", options as Intl.DateTimeFormatOptions);
 }
 </script>
 
@@ -33,12 +73,8 @@ function formatDate(date) {
     <div class="row" data-test-product>
       <!-- Colonne de gauche : image et compte à rebours -->
       <div class="col-lg-4">
-        <img
-          src="https://picsum.photos/id/250/512/512"
-          alt=""
-          class="img-fluid rounded mb-3"
-          data-test-product-picture
-        />
+        <img src="https://picsum.photos/id/250/512/512" alt="" class="img-fluid rounded mb-3"
+          data-test-product-picture />
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Compte à rebours</h5>
@@ -60,11 +96,8 @@ function formatDate(date) {
             </h1>
           </div>
           <div class="col-lg-6 text-end">
-            <RouterLink
-              :to="{ name: 'ProductEdition', params: { productId: 'TODO' } }"
-              class="btn btn-primary"
-              data-test-edit-product
-            >
+            <RouterLink :to="{ name: 'ProductEdition', params: { productId: 'TODO' } }" class="btn btn-primary"
+              data-test-edit-product>
               Editer
             </RouterLink>
             &nbsp;
@@ -86,10 +119,7 @@ function formatDate(date) {
           <li data-test-product-end-date>Date de fin : 20 juin 2026</li>
           <li>
             Vendeur :
-            <router-link
-              :to="{ name: 'User', params: { userId: 'TODO' } }"
-              data-test-product-seller
-            >
+            <router-link :to="{ name: 'User', params: { userId: 'TODO' } }" data-test-product-seller>
               alice
             </router-link>
           </li>
@@ -108,10 +138,7 @@ function formatDate(date) {
           <tbody>
             <tr v-for="i in 10" :key="i" data-test-bid>
               <td>
-                <router-link
-                  :to="{ name: 'User', params: { userId: 'TODO' } }"
-                  data-test-bid-bidder
-                >
+                <router-link :to="{ name: 'User', params: { userId: 'TODO' } }" data-test-bid-bidder>
                   charly
                 </router-link>
               </td>
@@ -130,22 +157,12 @@ function formatDate(date) {
         <form data-test-bid-form>
           <div class="form-group">
             <label for="bidAmount">Votre offre :</label>
-            <input
-              type="number"
-              class="form-control"
-              id="bidAmount"
-              data-test-bid-form-price
-            />
+            <input type="number" class="form-control" id="bidAmount" data-test-bid-form-price />
             <small class="form-text text-muted">
               Le montant doit être supérieur à 10 €.
             </small>
           </div>
-          <button
-            type="submit"
-            class="btn btn-primary"
-            disabled
-            data-test-submit-bid
-          >
+          <button type="submit" class="btn btn-primary" disabled data-test-submit-bid>
             Enchérir
           </button>
         </form>

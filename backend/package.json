@@ -5,7 +5,9 @@
   "module": "index.js",
   "description": "",
   "scripts": {
-    "start": "tsc && nodemon dist/server.js"
+    "dev": "tsup server.ts --watch --onSuccess \"node dist/server.cjs\"",
+    "start": "node dist/server.cjs",
+    "build": "tsup server.ts --minify"
   },
   "keywords": [],
   "author": "",
@@ -31,9 +33,9 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.2",
     "eslint-plugin-promise": "^6.1.1",
-    "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.2",
+    "tsup": "^8.0.1",
     "typescript-eslint": "^7.2.0"
   }
 }
