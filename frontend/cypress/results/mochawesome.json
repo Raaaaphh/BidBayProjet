@@ -1,0 +1,939 @@
+{
+  "stats": {
+    "suites": 8,
+    "tests": 31,
+    "passes": 0,
+    "pending": 0,
+    "failures": 31,
+    "start": "2024-03-22T08:26:40.271Z",
+    "end": "2024-03-22T08:27:44.980Z",
+    "duration": 64709,
+    "testsRegistered": 31,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c0a426f9-186b-47c8-9d91-d2099083e5ea",
+      "title": "",
+      "fullFile": "cypress\\e2e\\backend\\endpoints.cy.js",
+      "file": "cypress\\e2e\\backend\\endpoints.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "1d266afe-2c11-47c6-a4ed-a8a075959490",
+          "title": "GET /api/products",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 200 - success",
+              "fullTitle": "GET /api/products returns 200 - success",
+              "timedOut": null,
+              "duration": 386,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request(endpoint).then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.contains(\"application/json\");\n  for (let product of response.body) {\n    expect(product.id).to.be.a(\"string\");\n    expect(product.id).to.be.match(_pattern.UUIDv4);\n    expect(product.name).to.be.a(\"string\");\n    expect(product.description).to.be.a(\"string\");\n    expect(product.category).to.be.a(\"string\");\n    expect(product.originalPrice).to.be.a(\"number\");\n    expect(product.pictureUrl).to.be.a(\"string\");\n    expect(product.endDate).to.be.a(\"string\");\n    expect(product.endDate).to.match(_pattern.IOS8601);\n    expect(product.seller.id).to.be.a(\"string\");\n    expect(product.seller.username).to.be.a(\"string\");\n    for (let bid of product.bids) {\n      expect(bid.id).to.be.a(\"string\");\n      expect(bid.id).to.match(_pattern.UUIDv4);\n      expect(bid.price).to.be.a(\"number\");\n      expect(bid.date).to.be.a(\"string\");\n      expect(bid.date).to.match(_pattern.IOS8601);\n    }\n    const fixtureProduct = response.body.find(item => {\n      return item.id === \"a0f7c522-78f8-442e-a55d-642cfe566634\";\n    });\n    expect(fixtureProduct.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n    expect(fixtureProduct.name).to.be.eq(\"Lot de casseroles\");\n    expect(fixtureProduct.description).to.be.eq(\"Ensemble de casseroles de qualité supérieure pour répondre à tous vos besoins culinaires.\");\n    expect(fixtureProduct.category).to.be.eq(\"Cuisine\");\n    expect(fixtureProduct.originalPrice).to.be.eq(40);\n    expect(fixtureProduct.pictureUrl).to.be.eq(\"https://image.noelshack.com/fichiers/2023/12/4/1679526253-65535-51812547429-fe1cc0d832-c-512-512-nofilter.jpg\");\n    expect(fixtureProduct.seller.id).to.be.eq(_tokens.aliceId);\n    expect(fixtureProduct.seller.username).to.be.eq(\"alice\");\n    expect(fixtureProduct.bids.some(bid => bid.price === 65)).to.be.true;\n  }\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:40 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:40 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:20:7)",
+                "diff": null
+              },
+              "uuid": "9fd63bf0-f00d-4c61-840f-26952749bcb9",
+              "parentUUID": "1d266afe-2c11-47c6-a4ed-a8a075959490",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "9fd63bf0-f00d-4c61-840f-26952749bcb9"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 386,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "5ffbe356-2417-437a-8852-3a9ea7286579",
+          "title": "POST /api/products",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 401 - not authorized",
+              "fullTitle": "POST /api/products returns 401 - not authorized",
+              "timedOut": null,
+              "duration": 4278,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:90:7)",
+                "diff": "- 600\n+ 401\n"
+              },
+              "uuid": "0435385b-a289-4dc7-a04a-c40999801c76",
+              "parentUUID": "5ffbe356-2417-437a-8852-3a9ea7286579",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 201 - created",
+              "fullTitle": "POST /api/products returns 201 - created",
+              "timedOut": null,
+              "duration": 353,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  }\n}).then(response => {\n  // Assert that the response is as expected\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.match(_pattern.UUIDv4);\n  expect(response.body.name).to.eq(\"New Product\");\n  expect(response.body.description).to.eq(\"This is a new product\");\n  expect(response.body.category).to.eq(\"Electronics\");\n  expect(response.body.originalPrice).to.eq(99);\n  expect(response.body.pictureUrl).to.eq(\"https://example.com/product.jpg\");\n  expect(response.body.endDate).to.eq(\"2023-04-01T00:00:00.000Z\");\n  expect(response.body.sellerId).to.eq(_tokens.aliceId);\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 188\n}\nBody: {\"name\":\"New Product\",\"description\":\"This is a new product\",\"category\":\"Electronics\",\"originalPrice\":99,\"pictureUrl\":\"https://example.com/product.jpg\",\"endDate\":\"2023-04-01T00:00:00.000Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:45 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 188\n}\nBody: {\"name\":\"New Product\",\"description\":\"This is a new product\",\"category\":\"Electronics\",\"originalPrice\":99,\"pictureUrl\":\"https://example.com/product.jpg\",\"endDate\":\"2023-04-01T00:00:00.000Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:45 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:95:7)",
+                "diff": null
+              },
+              "uuid": "7562f51b-ad60-4b4d-b346-647f3c4a58f8",
+              "parentUUID": "5ffbe356-2417-437a-8852-3a9ea7286579",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 400 - missing or invalid fields",
+              "fullTitle": "POST /api/products returns 400 - missing or invalid fields",
+              "timedOut": null,
+              "duration": 345,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    // Missing name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).then(req => {\n  expect(req.status).to.be.eq(400);\n  expect(req.body.error).to.be.eq(\"Invalid or missing fields\");\n  expect(req.body.details).to.exist;\n});",
+              "err": {
+                "message": "AssertionError: expected 600 to equal 400",
+                "estack": "AssertionError: expected 600 to equal 400\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:143:31)",
+                "diff": "- 600\n+ 400\n"
+              },
+              "uuid": "9afe134d-3b3b-4488-bb05-4c9c5251cc3b",
+              "parentUUID": "5ffbe356-2417-437a-8852-3a9ea7286579",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "check mutation - object created in database",
+              "fullTitle": "POST /api/products check mutation - object created in database",
+              "timedOut": null,
+              "duration": 397,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a new product\n(0, _orm.getProducts)().then(({\n  products: productsBeforeCreation\n}) => {\n  (0, _orm.createProduct)().then(({\n    product\n  }) => {\n    (0, _orm.getProducts)().then(({\n      products: productsAfterCreation\n    }) => {\n      const newProducts = productsAfterCreation.filter(product => productsBeforeCreation.every(existingProduct => existingProduct.id !== product.id));\n      expect(newProducts.length).to.be.eq(1);\n      const newProduct = newProducts[0];\n      expect(newProduct.id).to.be.match(_pattern.UUIDv4);\n      expect(newProduct.name).to.eq(name);\n      expect(newProduct.description).to.eq(product.description);\n      expect(newProduct.category).to.eq(product.category);\n      expect(newProduct.originalPrice).to.eq(product.originalPrice);\n      expect(newProduct.pictureUrl).to.eq(product.pictureUrl);\n      expect(newProduct.endDate).to.eq(product.endDate);\n      expect(newProduct.seller.id).to.eq(_tokens.aliceId);\n      expect(newProduct.seller.username).to.eq(\"alice\");\n    });\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:46 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:46 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at eval (webpack://frontend/./cypress/e2e/common/orm.js:90:7)\nat new Promise (<anonymous>)\n    at getProducts (webpack://frontend/./cypress/e2e/common/orm.js:89:9)\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:152:16)",
+                "diff": null
+              },
+              "uuid": "92fb0dd6-fdb2-4761-988b-79752421bd2a",
+              "parentUUID": "5ffbe356-2417-437a-8852-3a9ea7286579",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "0435385b-a289-4dc7-a04a-c40999801c76",
+            "7562f51b-ad60-4b4d-b346-647f3c4a58f8",
+            "9afe134d-3b3b-4488-bb05-4c9c5251cc3b",
+            "92fb0dd6-fdb2-4761-988b-79752421bd2a"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 5373,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "18728ce7-72c0-46f6-9d59-fc97f932d583",
+          "title": "GET /api/products/:productId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 404 - not found",
+              "fullTitle": "GET /api/products/:productId returns 404 - not found",
+              "timedOut": null,
+              "duration": 4298,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:190:7)",
+                "diff": "- 600\n+ 404\n"
+              },
+              "uuid": "d44ef8e1-8ffa-4f7b-83e7-b4945c8bffaf",
+              "parentUUID": "18728ce7-72c0-46f6-9d59-fc97f932d583",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 200 - success",
+              "fullTitle": "GET /api/products/:productId returns 200 - success",
+              "timedOut": null,
+              "duration": 294,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request(endpoint).then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.includes(\"application/json\");\n  const product = response.body;\n  expect(product.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n  expect(product.name).to.be.eq(\"Lot de casseroles\");\n  expect(product.description).to.be.eq(\"Ensemble de casseroles de qualité supérieure pour répondre à tous vos besoins culinaires.\");\n  expect(product.category).to.be.eq(\"Cuisine\");\n  expect(product.originalPrice).to.be.eq(40);\n  expect(product.pictureUrl).to.be.eq(\"https://image.noelshack.com/fichiers/2023/12/4/1679526253-65535-51812547429-fe1cc0d832-c-512-512-nofilter.jpg\");\n  expect(product.seller.id).to.be.eq(_tokens.aliceId);\n  expect(product.seller.username).to.be.eq(\"alice\");\n  const bid = response.body.bids.find(bid => bid.price === 65);\n  expect(bid.id).to.be.eq(\"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\");\n  expect(bid.bidder.id).to.be.eq(_tokens.charlyId);\n  expect(bid.bidder.username).to.be.eq(\"charly\");\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:50 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:50 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:194:7)",
+                "diff": null
+              },
+              "uuid": "84b5731f-e484-460f-af81-f3b85de8a982",
+              "parentUUID": "18728ce7-72c0-46f6-9d59-fc97f932d583",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "d44ef8e1-8ffa-4f7b-83e7-b4945c8bffaf",
+            "84b5731f-e484-460f-af81-f3b85de8a982"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4592,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+          "title": "PUT /api/products/:productId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 401 - not authorized",
+              "fullTitle": "PUT /api/products/:productId returns 401 - not authorized",
+              "timedOut": null,
+              "duration": 4308,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"PUT\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:244:7)",
+                "diff": "- 600\n+ 401\n"
+              },
+              "uuid": "7f0cc187-20f7-4cf7-9e3a-402e398b442c",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 200 - success, when owner edit",
+              "fullTitle": "PUT /api/products/:productId returns 200 - success, when owner edit",
+              "timedOut": null,
+              "duration": 248,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  }\n}).its(\"status\").should(\"equal\", 200);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 291\n}\nBody: {\"name\":\"Machine à écrire\",\"description\":\"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\"pictureUrl\":\"https://picsum.photos/id/403/512/512\",\"category\":\"High-Tech\",\"originalPrice\":200,\"endDate\":\"2026-01-01T09:00:00Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:55 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 291\n}\nBody: {\"name\":\"Machine à écrire\",\"description\":\"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\"pictureUrl\":\"https://picsum.photos/id/403/512/512\",\"category\":\"High-Tech\",\"originalPrice\":200,\"endDate\":\"2026-01-01T09:00:00Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:55 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:248:7)",
+                "diff": null
+              },
+              "uuid": "1457e031-a62a-4afe-b147-b19cbef5c1ad",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 403 - forbidden, when non owner edit",
+              "fullTitle": "PUT /api/products/:productId returns 403 - forbidden, when non owner edit",
+              "timedOut": null,
+              "duration": 4309,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:287:7)",
+                "diff": "- 600\n+ 403\n"
+              },
+              "uuid": "33eba899-c3a7-44c1-9f2b-77c366825597",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 200 - success, when admin edit",
+              "fullTitle": "PUT /api/products/:productId returns 200 - success, when admin edit",
+              "timedOut": null,
+              "duration": 283,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  }\n}).its(\"status\").should(\"equal\", 200);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 291\n}\nBody: {\"name\":\"Machine à écrire\",\"description\":\"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\"pictureUrl\":\"https://picsum.photos/id/403/512/512\",\"category\":\"High-Tech\",\"originalPrice\":200,\"endDate\":\"2026-01-01T09:00:00Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:59 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 291\n}\nBody: {\"name\":\"Machine à écrire\",\"description\":\"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\"pictureUrl\":\"https://picsum.photos/id/403/512/512\",\"category\":\"High-Tech\",\"originalPrice\":200,\"endDate\":\"2026-01-01T09:00:00Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:26:59 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:291:7)",
+                "diff": null
+              },
+              "uuid": "8afdaf71-e955-408f-9747-dd0fc0bbfed6",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 404 - not found",
+              "fullTitle": "PUT /api/products/:productId returns 404 - not found",
+              "timedOut": null,
+              "duration": 4302,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: \"Machine à écrire\",\n    description: \"Machine à écrire vintage en parfait état de fonctionnement pour une expérience d'écriture unique et authentique.\",\n    pictureUrl: \"https://picsum.photos/id/403/512/512\",\n    category: \"High-Tech\",\n    originalPrice: 200,\n    endDate: \"2026-01-01T09:00:00Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:330:7)",
+                "diff": "- 600\n+ 404\n"
+              },
+              "uuid": "62e5a445-7a8b-4e21-bb17-30ffd0722863",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "check mutation - object updated in database",
+              "fullTitle": "PUT /api/products/:productId check mutation - object updated in database",
+              "timedOut": null,
+              "duration": 397,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const newProductData = (0, _orm.buildProduct)();\ncy.request({\n  url: endpoint,\n  method: \"PUT\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    name: newProductData.name,\n    description: newProductData.description,\n    pictureUrl: newProductData.pictureUrl,\n    category: newProductData.category,\n    originalPrice: newProductData.originalPrice,\n    endDate: newProductData.endDate.toISOString()\n  }\n}).then(() => {\n  cy.request(endpoint).then(response => {\n    const product = response.body;\n    expect(response.status).to.be.eq(200);\n    expect(product.id).to.be.eq(\"a0f7c522-78f8-442e-a55d-642cfe566634\");\n    expect(product.name).to.be.eq(newProductData.name);\n    expect(product.description).to.be.eq(newProductData.description);\n    expect(product.category).to.be.eq(newProductData.category);\n    expect(product.originalPrice).to.be.eq(newProductData.originalPrice);\n    expect(product.pictureUrl).to.be.eq(newProductData.pictureUrl);\n    expect(product.endDate).to.be.eq(newProductData.endDate.toISOString());\n    expect(product.seller.id).to.be.eq(_tokens.aliceId);\n    expect(product.seller.username).to.be.eq(\"alice\");\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 247\n}\nBody: {\"name\":\"Aa Diusmod dolore aliqua\",\"description\":\"Et tempor tempor magna amet sit consectetur ipsum eiusmod dolore\",\"pictureUrl\":\"https://picsum.photos/id/29/512/512\",\"category\":\"adipiscing\",\"originalPrice\":51,\"endDate\":\"2024-03-29T08:27:04.647Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:04 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 247\n}\nBody: {\"name\":\"Aa Diusmod dolore aliqua\",\"description\":\"Et tempor tempor magna amet sit consectetur ipsum eiusmod dolore\",\"pictureUrl\":\"https://picsum.photos/id/29/512/512\",\"category\":\"adipiscing\",\"originalPrice\":51,\"endDate\":\"2024-03-29T08:27:04.647Z\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:04 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:336:7)",
+                "diff": null
+              },
+              "uuid": "9b74575b-2880-4612-8755-06f7b756dc7b",
+              "parentUUID": "98da21bc-4c93-4ca3-ba02-3a36bf261058",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "7f0cc187-20f7-4cf7-9e3a-402e398b442c",
+            "1457e031-a62a-4afe-b147-b19cbef5c1ad",
+            "33eba899-c3a7-44c1-9f2b-77c366825597",
+            "8afdaf71-e955-408f-9747-dd0fc0bbfed6",
+            "62e5a445-7a8b-4e21-bb17-30ffd0722863",
+            "9b74575b-2880-4612-8755-06f7b756dc7b"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 13847,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+          "title": "DELETE /api/products/:productId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 401 - not authorized",
+              "fullTitle": "DELETE /api/products/:productId returns 401 - not authorized",
+              "timedOut": null,
+              "duration": 4286,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"DELETE\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:384:7)",
+                "diff": "- 600\n+ 401\n"
+              },
+              "uuid": "74123243-6dae-422a-ae28-8a0b93dd2362",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 204 - success, when owner edit",
+              "fullTitle": "DELETE /api/products/:productId returns 204 - success, when owner edit",
+              "timedOut": null,
+              "duration": 602,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:09 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:09 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:388:7)",
+                "diff": null
+              },
+              "uuid": "2a3c039e-45ba-4b8a-9e26-927af5c8eecf",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 403 - forbidden, when non owner edit",
+              "fullTitle": "DELETE /api/products/:productId returns 403 - forbidden, when non owner edit",
+              "timedOut": null,
+              "duration": 4474,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:409:7)",
+                "diff": "- 600\n+ 403\n"
+              },
+              "uuid": "6e85e9b8-1db6-4707-b7ab-f6cbf930f773",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 204 - success, when admin edit",
+              "fullTitle": "DELETE /api/products/:productId returns 204 - success, when admin edit",
+              "timedOut": null,
+              "duration": 314,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:14 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:14 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:413:7)",
+                "diff": null
+              },
+              "uuid": "cc547f8e-e19b-4b12-bd9b-16b0e7ee7539",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 404 - not found",
+              "fullTitle": "DELETE /api/products/:productId returns 404 - not found",
+              "timedOut": null,
+              "duration": 4333,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:434:7)",
+                "diff": "- 600\n+ 404\n"
+              },
+              "uuid": "b1e41fbe-85a1-4ea9-a239-964f3724c0f3",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "check mutation - object deleted in database",
+              "fullTitle": "DELETE /api/products/:productId check mutation - object deleted in database",
+              "timedOut": null,
+              "duration": 398,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"GET\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).then(response => {\n  expect(response.status).to.be.eq(200);\n  cy.request({\n    url: endpoint,\n    method: \"DELETE\",\n    headers: {\n      Authorization: `Bearer ${_tokens.aliceToken}`\n    }\n  }).then(response => {\n    expect(response.status).to.be.eq(204);\n    cy.request({\n      url: endpoint,\n      method: \"GET\",\n      headers: {\n        Authorization: `Bearer ${_tokens.aliceToken}`\n      },\n      failOnStatusCode: false\n    }).then(response => {\n      expect(response.status).to.be.eq(404);\n    });\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:19 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:19 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:438:7)",
+                "diff": null
+              },
+              "uuid": "bf51b13a-765b-4c5e-b1bc-53a1d6c2dfab",
+              "parentUUID": "0e38f625-0560-4697-aa85-bc58fb68e41c",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "74123243-6dae-422a-ae28-8a0b93dd2362",
+            "2a3c039e-45ba-4b8a-9e26-927af5c8eecf",
+            "6e85e9b8-1db6-4707-b7ab-f6cbf930f773",
+            "cc547f8e-e19b-4b12-bd9b-16b0e7ee7539",
+            "b1e41fbe-85a1-4ea9-a239-964f3724c0f3",
+            "bf51b13a-765b-4c5e-b1bc-53a1d6c2dfab"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 14407,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "c8d4c2a9-8c87-4378-9685-607999c5ca3a",
+          "title": "POST /api/products/:productId/bids",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 401 - not authorized",
+              "fullTitle": "POST /api/products/:productId/bids returns 401 - not authorized",
+              "timedOut": null,
+              "duration": 4420,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  body: {\n    name: \"New Product\",\n    description: \"This is a new product\",\n    category: \"Electronics\",\n    originalPrice: 99,\n    pictureUrl: \"https://example.com/product.jpg\",\n    endDate: \"2023-04-01T00:00:00.000Z\"\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:490:7)",
+                "diff": "- 600\n+ 401\n"
+              },
+              "uuid": "edb64079-b995-4ad4-a358-2acc76661ebd",
+              "parentUUID": "c8d4c2a9-8c87-4378-9685-607999c5ca3a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 201 - created",
+              "fullTitle": "POST /api/products/:productId/bids returns 201 - created",
+              "timedOut": null,
+              "duration": 264,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    price: 42\n  }\n}).then(response => {\n  // Assert that the response is as expected\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.match(_pattern.UUIDv4);\n  expect(response.body.productId).to.be.match(_pattern.UUIDv4);\n  expect(response.body.price).to.be.a(\"number\");\n  expect(response.body.date).to.match(_pattern.IOS8601);\n  expect(response.body.bidderId).to.match(_pattern.UUIDv4);\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 12\n}\nBody: {\"price\":42}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:24 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 12\n}\nBody: {\"price\":42}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:24 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:495:7)",
+                "diff": null
+              },
+              "uuid": "54edfc9f-470e-4dc3-9946-f117e3a99161",
+              "parentUUID": "c8d4c2a9-8c87-4378-9685-607999c5ca3a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 400 - missing or invalid fields",
+              "fullTitle": "POST /api/products/:productId/bids returns 400 - missing or invalid fields",
+              "timedOut": null,
+              "duration": 305,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Create a new product\ncy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    // price: 42, missing\n  },\n  failOnStatusCode: false\n}).then(req => {\n  expect(req.status).to.be.eq(400);\n  expect(req.body.error).to.be.eq(\"Invalid or missing fields\");\n  expect(req.body.details).to.exist;\n});",
+              "err": {
+                "message": "AssertionError: expected 600 to equal 400",
+                "estack": "AssertionError: expected 600 to equal 400\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:529:31)",
+                "diff": "- 600\n+ 400\n"
+              },
+              "uuid": "812ddb1b-c5a0-401d-9c25-30c72ff858d7",
+              "parentUUID": "c8d4c2a9-8c87-4378-9685-607999c5ca3a",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "check mutation - object created in database",
+              "fullTitle": "POST /api/products/:productId/bids check mutation - object created in database",
+              "timedOut": null,
+              "duration": 332,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"POST\",\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  body: {\n    price: 42\n  }\n}).then(response => {\n  expect(response.status).to.be.eq(201);\n  const newBid = response.body;\n  cy.request(\"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\").then(response => {\n    const product = response.body;\n    expect(product.bids.some(bid => bid.id === newBid.id)).to.be.true;\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 12\n}\nBody: {\"price\":42}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:24 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 12\n}\nBody: {\"price\":42}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:24 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:536:7)",
+                "diff": null
+              },
+              "uuid": "edd1e889-2a99-46ef-9cba-4311c201c404",
+              "parentUUID": "c8d4c2a9-8c87-4378-9685-607999c5ca3a",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "edb64079-b995-4ad4-a358-2acc76661ebd",
+            "54edfc9f-470e-4dc3-9946-f117e3a99161",
+            "812ddb1b-c5a0-401d-9c25-30c72ff858d7",
+            "edd1e889-2a99-46ef-9cba-4311c201c404"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 5321,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+          "title": "DELETE /bids/:bidId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 401 - not authorized",
+              "fullTitle": "DELETE /bids/:bidId returns 401 - not authorized",
+              "timedOut": null,
+              "duration": 4303,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"DELETE\",\n  url: endpoint,\n  headers: {\n    Authorization: `Bearer BAD_TOKEN`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 401);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 401\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:575:7)",
+                "diff": "- 600\n+ 401\n"
+              },
+              "uuid": "a9f0255c-5640-4508-b735-880507ff52d7",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 204 - success, when owner edit",
+              "fullTitle": "DELETE /bids/:bidId returns 204 - success, when owner edit",
+              "timedOut": null,
+              "duration": 600,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.charlyToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNmZWRjYzU2LWIxY2YtNDQ2Zi1iZmFjLTQ3YzlkMzc0YmMxOCIsInVzZXJuYW1lIjoiY2hhcmx5IiwiZW1haWwiOiJjaGFybHlAZXhhbXBsZS5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTY3OTc4OTA5M30.iJ25mRNgphA3xhFM-j8FrlzpFc75_OrrnacOhM6bcW8\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:29 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNmZWRjYzU2LWIxY2YtNDQ2Zi1iZmFjLTQ3YzlkMzc0YmMxOCIsInVzZXJuYW1lIjoiY2hhcmx5IiwiZW1haWwiOiJjaGFybHlAZXhhbXBsZS5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTY3OTc4OTA5M30.iJ25mRNgphA3xhFM-j8FrlzpFc75_OrrnacOhM6bcW8\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:29 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:579:7)",
+                "diff": null
+              },
+              "uuid": "60c4e3f6-5e78-455a-b0a7-dee97ed3ae10",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 403 - forbidden, when non owner edit",
+              "fullTitle": "DELETE /bids/:bidId returns 403 - forbidden, when non owner edit",
+              "timedOut": null,
+              "duration": 4749,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.bobToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 403);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 403\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:600:7)",
+                "diff": "- 600\n+ 403\n"
+              },
+              "uuid": "f4f27a27-2fa0-4a2b-a760-2a6e5d2d5106",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 204 - success, when admin edit",
+              "fullTitle": "DELETE /bids/:bidId returns 204 - success, when admin edit",
+              "timedOut": null,
+              "duration": 342,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: endpoint,\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.adminToken}`\n  }\n}).its(\"status\").should(\"equal\", 204);",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:35 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: DELETE\nURL: http://localhost:3000/api/bids/8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-length\": 0\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:35 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:604:7)",
+                "diff": null
+              },
+              "uuid": "a73d41d5-66c0-4ef5-a37b-738a24d54497",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 404 - not found",
+              "fullTitle": "DELETE /bids/:bidId returns 404 - not found",
+              "timedOut": null,
+              "duration": 4369,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/products/not-existing-id\",\n  method: \"DELETE\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  },\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:625:7)",
+                "diff": "- 600\n+ 404\n"
+              },
+              "uuid": "fcfe97c7-31a7-42a9-9e0e-9cb96490005c",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "check mutation - object deleted in database",
+              "fullTitle": "DELETE /bids/:bidId check mutation - object deleted in database",
+              "timedOut": null,
+              "duration": 277,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\",\n  method: \"GET\",\n  headers: {\n    Authorization: `Bearer ${_tokens.aliceToken}`\n  }\n}).then(response => {\n  const product = response.body;\n  expect(product.bids.some(bid => bid.id === \"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\")).to.be.true;\n  cy.request({\n    url: endpoint,\n    method: \"DELETE\",\n    headers: {\n      Authorization: `Bearer ${_tokens.charlyToken}`\n    }\n  }).then(response => {\n    expect(response.status).to.be.eq(204);\n    cy.request({\n      url: \"http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\",\n      method: \"GET\",\n      headers: {\n        Authorization: `Bearer ${_tokens.aliceToken}`\n      },\n      failOnStatusCode: false\n    }).then(response => {\n      const product = response.body;\n      expect(product.bids.some(bid => bid.id === \"8ccc6e79-f3c9-43e9-b47e-5be7b84d8de7\")).to.be.false;\n    });\n  });\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:40 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"Authorization\": \"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:40 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:629:7)",
+                "diff": null
+              },
+              "uuid": "28f70f01-7822-4f73-95cb-fe5414827958",
+              "parentUUID": "e2d32566-f8bc-4e61-871b-74432f80fcfd",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "a9f0255c-5640-4508-b735-880507ff52d7",
+            "60c4e3f6-5e78-455a-b0a7-dee97ed3ae10",
+            "f4f27a27-2fa0-4a2b-a760-2a6e5d2d5106",
+            "a73d41d5-66c0-4ef5-a37b-738a24d54497",
+            "fcfe97c7-31a7-42a9-9e0e-9cb96490005c",
+            "28f70f01-7822-4f73-95cb-fe5414827958"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 14640,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "88c39fb5-654a-4681-b177-562852a23125",
+          "title": "GET /api/users/:userId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "returns 404 - not found",
+              "fullTitle": "GET /api/users/:userId returns 404 - not found",
+              "timedOut": null,
+              "duration": 4274,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  url: \"http://localhost:3000/api/users/not-existing-id\",\n  failOnStatusCode: false\n}).its(\"status\").should(\"equal\", 404);",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404",
+                "estack": "AssertionError: Timed out retrying after 4000ms: expected 600 to equal 404\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:679:7)",
+                "diff": "- 600\n+ 404\n"
+              },
+              "uuid": "5a1e70a6-fc69-40b8-b774-0de1c182f2c7",
+              "parentUUID": "88c39fb5-654a-4681-b177-562852a23125",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "returns 200 - success",
+              "fullTitle": "GET /api/users/:userId returns 200 - success",
+              "timedOut": null,
+              "duration": 284,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request(\"http://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\").then(response => {\n  expect(response.status).to.be.eq(200);\n  expect(response.headers[\"content-type\"]).to.contains(\"application/json\");\n  const user = response.body;\n  expect(user.id).to.eq(\"1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\");\n  expect(user.username).to.be.eq(\"alice\");\n  expect(user.admin).to.be.false;\n  for (let product of user.products) {\n    expect(product.id).to.be.a(\"string\");\n    expect(product.id).to.match(_pattern.UUIDv4);\n    expect(product.description).to.be.a(\"string\");\n    expect(product.category).to.be.a(\"string\");\n    expect(product.originalPrice).to.be.a(\"number\");\n    expect(product.pictureUrl).to.be.a(\"string\");\n    expect(product.endDate).to.be.a(\"string\");\n    expect(product.endDate).to.match(_pattern.IOS8601);\n  }\n  for (let bid of user.bids) {\n    expect(bid.id).to.be.a(\"string\");\n    expect(bid.id).to.match(_pattern.UUIDv4);\n    expect(bid.price).to.be.a(\"number\");\n    expect(bid.date).to.be.a(\"string\");\n    expect(bid.date).to.match(_pattern.IOS8601);\n    expect(bid.product.id).to.a(\"string\");\n    expect(bid.product.id).to.match(_pattern.UUIDv4);\n    expect(bid.product.name).to.a(\"string\");\n  }\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:44 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttp://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\n\nThe response we received from your web server was:\n\n  > 600: Unknown Status Code\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/users/1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/123.0.0.0 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\"\n}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 600 - Unknown Status Code\nHeaders: {\n  \"x-powered-by\": \"Express\",\n  \"access-control-allow-origin\": \"*\",\n  \"date\": \"Fri, 22 Mar 2024 08:27:44 GMT\",\n  \"connection\": \"keep-alive\",\n  \"keep-alive\": \"timeout=5\",\n  \"content-length\": \"0\"\n}\nBody: \n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:59557/__cypress/runner/cypress_runner.js:133123:72)\n    at tryCatcher (http://localhost:59557/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:59557/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:59557/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:59557/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:59557/__cypress/runner/cypress_runner.js:1701:18)\n    at _drainQueueStep (http://localhost:59557/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:59557/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:59557/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/backend/endpoints.cy.js:683:7)",
+                "diff": null
+              },
+              "uuid": "4b9d7227-f405-4c10-bef2-c2bb8a9b3b0c",
+              "parentUUID": "88c39fb5-654a-4681-b177-562852a23125",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "5a1e70a6-fc69-40b8-b774-0de1c182f2c7",
+            "4b9d7227-f405-4c10-bef2-c2bb8a9b3b0c"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4558,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
