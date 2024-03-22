@@ -1,9 +1,9 @@
 export interface Product {
-    id: number
+    id?: number
     name: string
     description: string
     category: string
-    sellerId: number
+    sellerId?: number
     originalPrice: number
     pictureUrl: string
     endDate: string

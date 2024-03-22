@@ -10,8 +10,6 @@ const router = useRouter();
 let loading = ref(false);
 let errorMessage = ref("");
 let product: Product = {
-  id: 0,
-  sellerId: 0,
   name: "",
   description: "",
   category: "",
