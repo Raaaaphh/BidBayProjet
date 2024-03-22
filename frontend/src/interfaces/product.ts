@@ -7,4 +7,8 @@ export interface Product {
     originalPrice: number
     pictureUrl: string
     endDate: string
+    seller?: {
+        id: number
+        username: string
+    }
 }
