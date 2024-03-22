@@ -1,0 +1,21 @@
+export const aliceToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFmMmZhZGIxLTBkN2UtNDdhNy05ZDViLWVkMDMxZDY2NWQzZSIsInVzZXJuYW1lIjoiYWxpY2UiLCJlbWFpbCI6ImFsaWNlQGV4YW1wbGUuY29tIiwiYWRtaW4iOmZhbHNlLCJpYXQiOjE2Nzk2MTMwMzh9.KcT42jbNXfNR-0I-bTc_qNdAuCid640tXpkzUtDCoao";
+
+export const bobToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJmOGU5NDUwLWFlYWItNGVjZS1hOWJiLWZiNTIxMmYyODc1NSIsInVzZXJuYW1lIjoiYm9iIiwiZW1haWwiOiJib2JAZXhhbXBsZS5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTY3OTYxMzA4OH0.bbzc3eD-ZpOSlxG8vwtMTxPq1ZDzbKMDqRkv9NCTqr0";
+
+export const charlyToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNmZWRjYzU2LWIxY2YtNDQ2Zi1iZmFjLTQ3YzlkMzc0YmMxOCIsInVzZXJuYW1lIjoiY2hhcmx5IiwiZW1haWwiOiJjaGFybHlAZXhhbXBsZS5jb20iLCJhZG1pbiI6ZmFsc2UsImlhdCI6MTY3OTc4OTA5M30.iJ25mRNgphA3xhFM-j8FrlzpFc75_OrrnacOhM6bcW8";
+
+export const adminToken =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRmNjhhMjg2LWQ4ODctNDE4NS05NzBhLTJlOGY5NjA3NTUwYyIsInVzZXJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLm9yZyIsImFkbWluIjp0cnVlLCJpYXQiOjE2Nzk2MTMxNzZ9.PJHuY8TzyF8CJwzw5Ih9GgcRZmd6BjsfRdMZ4fzpGZs";
+
+export const aliceId = "1f2fadb1-0d7e-47a7-9d5b-ed031d665d3e";
+
+export const bobId = "2f8e9450-aeab-4ece-a9bb-fb5212f28755";
+
+export const charlyId = "3fedcc56-b1cf-446f-bfac-47c9d374bc18";
+
+export const adminId = "4f68a286-d887-4185-970a-2e8f9607550c";
+
+export const casserolesId = "a0f7c522-78f8-442e-a55d-642cfe566634";

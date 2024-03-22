@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true,
+    "target": "es2021",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["es2021", "dom"],
+    "types": ["cypress", "node", "vite/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "allowJs": true,
+    "checkJs": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "**/*.ts"]
+}
