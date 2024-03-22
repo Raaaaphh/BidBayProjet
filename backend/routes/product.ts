@@ -54,6 +54,8 @@ router.get('/api/products/:productId', async (req, res) => {
 router.post('/api/products', authMiddleware, (req, res) => {
   if (!getDetails(req.body)) return res.status(400).send('Invalid input');
 
+  if (!req.user) return res.status(401).send('Unauthorized');
+
   if (req.user) {
     Product.create({
       sellerId: req.user.id,
@@ -66,12 +68,57 @@ router.post('/api/products', authMiddleware, (req, res) => {
   }
 })
 
-router.put('/api/products/:productId', async (req, res) => {
+router.put('/api/products/:productId', authMiddleware, async (req, res) => {
+  if (!getDetails(req.body)) return res.status(400).send('Invalid input');
+
+  if (!req.user) return res.status(401).send('Unauthorized');
+
+  let product = null;
+
+  if (req.user.admin) {
+    product = await Product.findByPk(req.params.productId);
+  } else {
+    product = await Product.findOne({
+      where: {
+        id: req.params.productId,
+        sellerId: req.user.id
+      }
+    });
+  }
+
+  if (!product) return res.status(404).send('Product not found');
+
+  product.update(req.body).then(updatedProduct => {
+    res.status(200).send(updatedProduct);
+  }).catch(err => {
+    res.status(400).send(err);
+  });
 
 })
 
-router.delete('/api/products/:productId', async (req, res) => {
+router.delete('/api/products/:productId', authMiddleware, async (req, res) => {
+  if (!req.user) return res.status(401).send('Unauthorized');
 
+  let product = null;
+
+  if (req.user.admin) {
+    product = await Product.findByPk(req.params.productId);
+  } else {
+    product = await Product.findOne({
+      where: {
+        id: req.params.productId,
+        sellerId: req.user.id
+      }
+    });
+  }
+
+  if (!product) return res.status(404).send('Product not found');
+
+  product.destroy().then(() => {
+    res.status(204).send();
+  }).catch(err => {
+    res.status(400).send(err);
+  });
 })
 
 export default router
