@@ -11,23 +11,24 @@ const router = useRouter();
 
 const productId = ref(route.params.productId);
 
-async function getProduct(): Promise<Product | null> {
+function getProduct(): Product | null | undefined {
+
   if (!productId.value) {
     return null;
   }
 
-  const response = await fetch(`http://localhost:3000/api/products/${productId.value}`);
-  if (!response.ok) {
-    return null;
-  }
+  fetch(`http://localhost:3000/api/products/${productId.value}`).then((response) => {
+    if (!response.ok) {
+      return null;
+    }
 
-  return await response.json();
+    return response.json();
+  });
 }
 
 
-
-const countdown = computed(async () => {
-  const product = await getProduct();
+const countdown = computed(() => {
+  const product = getProduct();
 
   if (!product) {
     return "";
