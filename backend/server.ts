@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({}))
 
-async function main () {
+async function main() {
   await initializeDatabase()
   await regenerateFixtures()
 
