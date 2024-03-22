@@ -8,6 +8,8 @@ const { isAuthenticated, isAdmin, userData, token } = useAuthStore();
 
 const route = useRoute();
 const router = useRouter();
+let error = ref(false);
+let loading = ref(true);
 
 const productId = ref(route.params.productId);
 
@@ -17,11 +19,16 @@ function getProduct(): Product | null | undefined {
     return null;
   }
 
+  console.log(productId.value);
+
   fetch(`http://localhost:3000/api/products/${productId.value}`).then((response) => {
     if (!response.ok) {
+      error.value = true;
+      loading.value = false;
       return null;
     }
-
+    loading.value = false;
+    console.log(response.json());
     return response.json();
   });
 }
