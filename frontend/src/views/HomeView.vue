@@ -1,19 +1,23 @@
 <script setup lang="ts">
+import { get } from "cypress/types/lodash";
 import { ref, computed } from "vue";
 
-const loading = ref(false);
+const loading = ref(true);
 const error = ref(false);
+let products = ref();
 
 async function fetchProducts() {
   loading.value = true;
   error.value = false;
 
-  try {
-  } catch (e) {
-    error.value = true;
-  } finally {
+  fetch("http://localhost:3000/api/products").then(async (res) => {
+    products.value = await res.json()
     loading.value = false;
-  }
+  }).catch(() => {
+    error.value = true;
+    loading.value = false;
+  });
+  
 }
 
 fetchProducts();
@@ -62,21 +66,21 @@ fetchProducts();
       </div>
     </div>
 
-    <div class="text-center mt-4" data-test-loading>
+    <div class="text-center mt-4" data-test-loading v-if="loading">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Chargement...</span>
       </div>
     </div>
 
-    <div class="alert alert-danger mt-4" role="alert" data-test-error>
+    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error">
       Une erreur est survenue lors du chargement des produits.
     </div>
     <div class="row">
-      <div class="col-md-4 mb-4" v-for="i in 10" data-test-product :key="i">
+      <div class="col-md-4 mb-4" v-for="prod in products" data-test-product :key="prod.id">
         <div class="card">
-          <RouterLink :to="{ name: 'Product', params: { productId: 'TODO' } }">
+          <RouterLink :to="{ name: 'Product', params: { productId: prod.id } }">
             <img
-              src="https://picsum.photos/id/403/512/512"
+              :src="prod.pictureUrl"
               data-test-product-picture
               class="card-img-top"
             />
@@ -85,27 +89,27 @@ fetchProducts();
             <h5 class="card-title">
               <RouterLink
                 data-test-product-name
-                :to="{ name: 'Product', params: { productId: 'TODO' } }"
+                :to="{ name: 'Product', params: { productId: prod.id } }"
               >
-                Machine à écrire
+                {{ prod.name }}
               </RouterLink>
             </h5>
             <p class="card-text" data-test-product-description>
-              Machine à écrire vintage en parfait état de fonctionnement
+              {{ prod.description }}
             </p>
             <p class="card-text">
               Vendeur :
               <RouterLink
                 data-test-product-seller
-                :to="{ name: 'User', params: { userId: 'TODO' } }"
+                :to="{ name: 'User', params: { userId: prod.seller.id } }"
               >
-                alice
+                {{ prod.seller.username }}
               </RouterLink>
             </p>
             <p class="card-text" data-test-product-date>
-              En cours jusqu'au 05/04/2026
+              En cours jusqu'au {{ new Date(prod.endDate).toLocaleDateString('en-GB') }}
             </p>
-            <p class="card-text" data-test-product-price>Prix actuel : 42 €</p>
+            <p class="card-text" data-test-product-price>Prix actuel : {{ prod.originalPrice }} €</p>
           </div>
         </div>
       </div>
