@@ -22,9 +22,13 @@ router.get('/api/users/:userId', async (req, res) => {
         ]
       }
     ]
-
   })
-  if (!user) return res.status(404).send('User not found')
+
+  if (user) {
+    user.password = "";
+  } else {
+    return res.status(404).send('User not found');
+  }
 
   res.status(200).send(user)
 })

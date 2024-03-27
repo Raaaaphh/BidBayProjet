@@ -1,3 +1,5 @@
+import { Product } from "./product";
+
 export interface Bid {
     bidder: {
         id: string;
@@ -10,4 +12,5 @@ export interface Bid {
     price: number;
     productId: string;
     updatedAt: string;
+    product: Product;
 }
