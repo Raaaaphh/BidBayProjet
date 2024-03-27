@@ -76,9 +76,10 @@ function editProduct() {
     },
     body: JSON.stringify(product),
   })
-    .then((response) => {
+    .then(async (response) => {
       if (!response.ok) {
-        throw new Error("Une erreur s'est produite");
+        const responseData = await response.json();
+        throw new Error(responseData.details);
       }
 
       return response.json();
