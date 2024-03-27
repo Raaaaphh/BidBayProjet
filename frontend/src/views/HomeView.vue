@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Product } from "@/interfaces/product";
-import { get } from "cypress/types/lodash";
+//import { get } from "cypress/types/lodash";
 import { ref, computed } from "vue";
 
 const loading = ref(true);

@@ -10,18 +10,19 @@ const route = useRoute();
 const router = useRouter();
 let error = ref(false);
 let loading = ref(true);
+let price = ref(0);
 
 const productId = ref(route.params.productId);
 let product = ref<Product>();
+
+getProduct();
 
 function getProduct(): void {
 
   if (!productId.value) {
     error.value = true;
-    return;
+    router.push({ name: "Home" });
   }
-
-  console.log(productId.value);
 
   fetch(`http://localhost:3000/api/products/${productId.value}`)
     .then(async (response) => {
@@ -32,20 +33,23 @@ function getProduct(): void {
       }
       loading.value = false;
       const responseData = await response.json();
-      console.log(responseData);
       product.value = responseData;
     })
     .catch(error => {
-      console.error('Error fetching product:', error);
       error.value = true;
       loading.value = false;
     });
 }
 
+function canDeleteProduct(): boolean {
+  return isAuthenticated.value && (isAdmin.value || product.value?.seller?.id === userData.value?.id);
+}
+
+function canEditBid(bidderId: string): boolean {
+  return isAuthenticated.value && (isAdmin.value || bidderId === userData.value?.id);
+}
 
 const countdown = computed(() => {
-  getProduct();
-
   if (!product) {
     return "";
   }
@@ -56,7 +60,7 @@ const countdown = computed(() => {
   const diff = endDate - now;
 
   if (diff <= 0) {
-    return "Terminée";
+    return "Vente terminée";
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -77,16 +81,16 @@ function formatDate(date: string | number | Date) {
 
 <template>
   <div class="row">
-    <div class="text-center mt-4" data-test-loading>
+    <div class="text-center mt-4" data-test-loading v-if="loading">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Chargement...</span>
       </div>
     </div>
 
-    <div class="alert alert-danger mt-4" role="alert" data-test-error>
+    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error">
       Une erreur est survenue lors du chargement des produits.
     </div>
-    <div class="row" data-test-product>
+    <div class="row" data-test-product v-if="product">
       <!-- Colonne de gauche : image et compte à rebours -->
       <div class="col-lg-4">
         <img :src="product?.pictureUrl" alt="" class="img-fluid rounded mb-3" data-test-product-picture />
@@ -112,11 +116,11 @@ function formatDate(date: string | number | Date) {
           </div>
           <div class="col-lg-6 text-end">
             <RouterLink :to="{ name: 'ProductEdition', params: { productId: product?.id } }" class="btn btn-primary"
-              data-test-edit-product>
+              data-test-edit-product v-if="canDeleteProduct()">
               Editer
             </RouterLink>
             &nbsp;
-            <button class="btn btn-danger" data-test-delete-product>
+            <button class="btn btn-danger" data-test-delete-product v-if="canDeleteProduct()">
               Supprimer
             </button>
           </div>
@@ -130,8 +134,7 @@ function formatDate(date: string | number | Date) {
         <h2 class="mb-3">Informations sur l'enchère</h2>
         <ul>
           <li data-test-product-price>Prix de départ : {{ product?.originalPrice }} €</li>
-          <li data-test-product-end-date>Date de fin : {{ new Date(product?.endDate as
-          string).toLocaleDateString('en-GB') }}</li>
+          <li data-test-product-end-date>Date de fin : {{ formatDate(product?.endDate) }}</li>
           <li>
             Vendeur :
             <router-link :to="{ name: 'User', params: { userId: product?.seller?.id } }" data-test-product-seller>
@@ -151,16 +154,16 @@ function formatDate(date: string | number | Date) {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in 10" :key="i" data-test-bid>
+            <tr v-for="bid in product.bids" :key="bid.id" data-test-bid>
               <td>
-                <router-link :to="{ name: 'User', params: { userId: 'TODO' } }" data-test-bid-bidder>
-                  charly
+                <router-link :to="{ name: 'User', params: { userId: bid.bidderId } }" data-test-bid-bidder>
+                  {{ bid.bidder.username }}
                 </router-link>
               </td>
-              <td data-test-bid-price>43 €</td>
-              <td data-test-bid-date>22 mars 2026</td>
+              <td data-test-bid-price>{{ bid.price }} €</td>
+              <td data-test-bid-date>{{ formatDate(bid.createdAt) }}</td>
               <td>
-                <button class="btn btn-danger btn-sm" data-test-delete-bid>
+                <button class="btn btn-danger btn-sm" data-test-delete-bid v-if="canEditBid(bid.bidderId)">
                   Supprimer
                 </button>
               </td>
@@ -172,12 +175,13 @@ function formatDate(date: string | number | Date) {
         <form data-test-bid-form>
           <div class="form-group">
             <label for="bidAmount">Votre offre :</label>
-            <input type="number" class="form-control" id="bidAmount" data-test-bid-form-price />
-            <small class="form-text text-muted">
+            <input type="number" class="form-control" id="bidAmount" data-test-bid-form-price v-model="price" />
+            <small class="form-text text-muted" v-if="price <= 10">
               Le montant doit être supérieur à 10 €.
             </small>
           </div>
-          <button type="submit" class="btn btn-primary" disabled data-test-submit-bid>
+          <button type="submit" class="btn btn-primary" :disabled="!isAuthenticated || price <= 10"
+            data-test-submit-bid>
             Enchérir
           </button>
         </form>

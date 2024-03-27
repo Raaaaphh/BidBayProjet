@@ -1,3 +1,5 @@
+import { Bid } from "./bid"
+
 export interface Product {
     id?: number
     name: string
@@ -11,4 +13,5 @@ export interface Product {
         id: number
         username: string
     }
+    bids?: Bid[]
 }
