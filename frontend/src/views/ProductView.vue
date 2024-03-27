@@ -2,7 +2,6 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
-import { Product } from "../interfaces/product";
 
 const { isAuthenticated, isAdmin, userData, token } = useAuthStore();
 
@@ -13,7 +12,7 @@ let loading = ref(true);
 let price = ref(0);
 
 const productId = ref(route.params.productId);
-let product = ref<Product>();
+let product = ref();
 
 getProduct();
 

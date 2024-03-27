@@ -1,7 +1,7 @@
 import { Bid } from "./bid"
 
 export interface Product {
-    id?: number
+    id?: string
     name: string
     description: string
     category: string
