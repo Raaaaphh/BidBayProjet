@@ -102,17 +102,35 @@ router.delete('/api/products/:productId', authMiddleware, async (req, res) => {
   let product = null;
 
   if (req.user.admin) {
-    product = await Product.findByPk(req.params.productId);
+    product = await Product.findByPk(req.params.productId, {
+      include: [
+        {
+          model: Bid,
+          as: 'bids'
+        }
+      ]
+
+    });
   } else {
     product = await Product.findOne({
       where: {
         id: req.params.productId,
         sellerId: req.user.id
-      }
+      },
+      include: [
+        {
+          model: Bid,
+          as: 'bids'
+        }
+      ]
     });
   }
 
   if (!product) return res.status(404).send('Product not found');
+
+  for (let bid of product.bids) {
+    await bid.destroy();
+  }
 
   product.destroy().then(() => {
     res.status(204).send();

@@ -7,6 +7,8 @@ const { isAuthenticated, token } = useAuthStore();
 const router = useRouter();
 const route = useRoute();
 
+const 
+
 if (!isAuthenticated.value) {
   router.push({ name: "Login" });
 }

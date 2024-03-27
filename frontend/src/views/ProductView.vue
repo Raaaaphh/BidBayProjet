@@ -8,7 +8,7 @@ const { isAuthenticated, isAdmin, userData, token } = useAuthStore();
 
 const route = useRoute();
 const router = useRouter();
-let error = ref(false);
+let error = ref("");
 let loading = ref(true);
 let price = ref(0);
 
@@ -20,14 +20,19 @@ getProduct();
 function getProduct(): void {
 
   if (!productId.value) {
-    error.value = true;
+    error.value = "Aucun produit n'a été trouvé.";
     router.push({ name: "Home" });
   }
 
   fetch(`http://localhost:3000/api/products/${productId.value}`)
     .then(async (response) => {
       if (!response.ok) {
-        error.value = true;
+        if (response.status === 404) {
+          error.value = "Le produit n'existe pas.";
+          loading.value = false;
+          return null;
+        }
+        error.value = "Une erreur est survenue lors du chargement du produit.";
         loading.value = false;
         return null;
       }
@@ -47,6 +52,33 @@ function canDeleteProduct(): boolean {
 
 function canEditBid(bidderId: string): boolean {
   return isAuthenticated.value && (isAdmin.value || bidderId === userData.value?.id);
+}
+
+function deleteProduct(): void {
+  if (!product.value) {
+    return;
+  }
+
+  fetch(`http://localhost:3000/api/products/${product.value.id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          error.value = "Vous n'êtes pas autorisé à supprimer ce produit.";
+          return;
+        }
+        error.value = "Le produit n'existe pas ou une erreur est survenue lors de la suppression.";
+        return;
+      }
+      router.push({ name: "Home" });
+    })
+    .catch(() => {
+      error.value = "Une erreur est survenue lors de la suppression du produit.";
+    });
 }
 
 const countdown = computed(() => {
@@ -88,7 +120,7 @@ function formatDate(date: string | number | Date) {
     </div>
 
     <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error">
-      Une erreur est survenue lors du chargement des produits.
+      {{ error }}
     </div>
     <div class="row" data-test-product v-if="product">
       <!-- Colonne de gauche : image et compte à rebours -->
@@ -120,7 +152,7 @@ function formatDate(date: string | number | Date) {
               Editer
             </RouterLink>
             &nbsp;
-            <button class="btn btn-danger" data-test-delete-product v-if="canDeleteProduct()">
+            <button class="btn btn-danger" data-test-delete-product v-if="canDeleteProduct()" @click="deleteProduct()">
               Supprimer
             </button>
           </div>
@@ -154,7 +186,7 @@ function formatDate(date: string | number | Date) {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="bid in product.bids" :key="bid.id" data-test-bid>
+            <tr v-for="bid in product.bids" :key="bid.id" v-if="product.bids !== undefined" data-test-bid>
               <td>
                 <router-link :to="{ name: 'User', params: { userId: bid.bidderId } }" data-test-bid-bidder>
                   {{ bid.bidder.username }}
@@ -170,7 +202,7 @@ function formatDate(date: string | number | Date) {
             </tr>
           </tbody>
         </table>
-        <p data-test-no-bids>Aucune offre pour le moment</p>
+        <p data-test-no-bids v-if="product.bids?.length === 0">Aucune offre pour le moment</p>
 
         <form data-test-bid-form>
           <div class="form-group">
