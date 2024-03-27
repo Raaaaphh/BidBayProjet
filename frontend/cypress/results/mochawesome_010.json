@@ -1,0 +1,282 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2024-03-27T20:02:50.308Z",
+    "end": "2024-03-27T20:02:50.996Z",
+    "duration": 688,
+    "testsRegistered": 9,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 8,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "7c8cfc3a-0d87-455f-859b-1e6294126f6e",
+      "title": "",
+      "fullFile": "cypress\\e2e\\frontend\\user.cy.js",
+      "file": "cypress\\e2e\\frontend\\user.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "851e90a7-2730-46fd-807e-d55e728d1b00",
+          "title": "Page /users/:userId",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "display products",
+              "fullTitle": "Page /users/:userId display products",
+              "timedOut": null,
+              "duration": 627,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Test le scénario de récupération et d'affichage des produits\n(0, _orm.createProduct)().then(({\n  product\n}) => {\n  cy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\n  cy.get(\"[data-test-product]\").should(\"have.length\", 8);\n  cy.get(\"[data-test-product]\").last().find(\"[data-test-product-name]\").should(\"have.text\", product.name).invoke(\"attr\", \"href\").should(\"contain\", product.id);\n  cy.get(\"[data-test-product]\").last().find(\"[data-test-product-description]\").should(\"have.text\", product.description);\n  cy.get(\"[data-test-product]\").last().find(\"[data-test-product-price]\").should(\"contain.text\", product.originalPrice + \" €\");\n  cy.get(\"[data-test-product]\").last().find(\"[data-test-product-picture]\").invoke(\"attr\", \"src\").should(\"eq\", product.pictureUrl);\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:3000/api/dev/reset\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:3000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:3000/api/dev/reset\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n\nBecause this error occurred during a `before each` hook we are skipping all of the remaining tests.\n    at <unknown> (http://localhost:3592/__cypress/runner/cypress_runner.js:133151:70)\n    at tryCatcher (http://localhost:3592/__cypress/runner/cypress_runner.js:1807:23)\n    at <unknown> (http://localhost:3592/__cypress/runner/cypress_runner.js:4203:37)\n    at tryCatcher (http://localhost:3592/__cypress/runner/cypress_runner.js:1807:23)\n    at Promise._settlePromiseFromHandler (http://localhost:3592/__cypress/runner/cypress_runner.js:1519:31)\n    at Promise._settlePromise (http://localhost:3592/__cypress/runner/cypress_runner.js:1576:18)\n    at Promise._settlePromise0 (http://localhost:3592/__cypress/runner/cypress_runner.js:1621:10)\n    at Promise._settlePromises (http://localhost:3592/__cypress/runner/cypress_runner.js:1697:18)\n    at _drainQueueStep (http://localhost:3592/__cypress/runner/cypress_runner.js:2407:12)\n    at _drainQueue (http://localhost:3592/__cypress/runner/cypress_runner.js:2400:9)\n    at Async._drainQueues (http://localhost:3592/__cypress/runner/cypress_runner.js:2416:5)\n    at Async.drainQueues (http://localhost:3592/__cypress/runner/cypress_runner.js:2286:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://frontend/./cypress/e2e/frontend/user.cy.js:12:5)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:3000\n      at new r (<embedded>:1831:404877)\n      at ee.callback (<embedded>:1831:410878)\n      at e.callback.s.callback [as _callback] (<embedded>:1831:410324)\n      at s._callback.s.callback.s.callback (<embedded>:2049:91633)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:2049:100575)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "d131e775-f54f-425c-bff7-3c06690ab93f",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "display bids",
+              "fullTitle": "Page /users/:userId display bids",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Test le scénario de récupération et d'affichage des offres\n(0, _orm.createProduct)(\"futur\", _tokens.bobToken).then(({\n  product\n}) => {\n  (0, _orm.createBid)(product.id, product.originalPrice, _tokens.aliceToken).then(({\n    bid\n  }) => {\n    cy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\n    cy.get(\"[data-test-bid]\").should(\"exist\");\n    cy.get(`[data-test-bid-product][href$=\"${product.id}\"]`).should(\"exist\").first().closest(\"[data-test-bid]\").then(el => {\n      cy.wrap(el).find(\"[data-test-bid-product]\").should(\"have.text\", product.name);\n      cy.wrap(el).find(\"[data-test-bid-price]\").should(\"have.text\", bid.price + \" €\");\n      cy.wrap(el).find(\"[data-test-bid-date]\").should(\"contain.text\", new Date().getDate()).should(\"contain.text\", new Date().getMonth() + 1).should(\"contain.text\", new Date().getFullYear());\n    });\n  });\n});",
+              "err": {},
+              "uuid": "a64a040e-c719-4637-b2a8-abf908930922",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "no admin badge",
+              "fullTitle": "Page /users/:userId no admin badge",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie qu'un utilisateur a un badge admin si et seulement si il est admin\ncy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\ncy.get(\"[data-test-admin]\").should(\"not.exist\");\ncy.visit(`http://localhost:5173/users/${_tokens.adminId}`);\ncy.get(\"[data-test-admin]\").should(\"exist\");",
+              "err": {},
+              "uuid": "a4061af3-86f9-4488-86e2-9167df5fe51f",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "loading",
+              "fullTitle": "Page /users/:userId loading",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie la présence d'un spinner au chargement\ncy.intercept(`http://localhost:3000/api/users/${_tokens.aliceId}`, {\n  delay: 10000\n});\ncy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\ncy.get(\"[data-test-loading]\").should(\"exist\");\ncy.get(\"[data-test-view]\").should(\"not.exist\");\ncy.get(\"[data-test-error]\").should(\"not.exist\");",
+              "err": {},
+              "uuid": "1d3ea601-41a1-4e68-a3e0-e4e2f9884f33",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "error",
+              "fullTitle": "Page /users/:userId error",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie la présence d'une erreur en cas d'échec de chargement\ncy.intercept(`http://localhost:3000/api/users/${_tokens.aliceId}`, {\n  statusCode: 500\n});\ncy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\ncy.get(\"[data-test-error]\").should(\"exist\");\ncy.get(\"[data-test-loading]\").should(\"not.exist\");\ncy.get(\"[data-test-view]\").should(\"not.exist\");",
+              "err": {},
+              "uuid": "18a3f092-7b0b-48c5-891b-730f1e62e72d",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "ready",
+              "fullTitle": "Page /users/:userId ready",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie la présence du contenu quand tout s'est bien chargé\ncy.visit(`http://localhost:5173/users/${_tokens.aliceId}`);\ncy.get(\"[data-test-error]\").should(\"not.exist\");\ncy.get(\"[data-test-loading]\").should(\"not.exist\");\ncy.get(\"[data-test-view]\").should(\"exist\");",
+              "err": {},
+              "uuid": "40da0495-e8ef-45d0-9b0b-75ca7a2289f3",
+              "parentUUID": "851e90a7-2730-46fd-807e-d55e728d1b00",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "d131e775-f54f-425c-bff7-3c06690ab93f"
+          ],
+          "pending": [],
+          "skipped": [
+            "a64a040e-c719-4637-b2a8-abf908930922",
+            "a4061af3-86f9-4488-86e2-9167df5fe51f",
+            "1d3ea601-41a1-4e68-a3e0-e4e2f9884f33",
+            "18a3f092-7b0b-48c5-891b-730f1e62e72d",
+            "40da0495-e8ef-45d0-9b0b-75ca7a2289f3"
+          ],
+          "duration": 627,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "f70bddb9-a105-4e74-ae1c-e6c83b2fdedb",
+          "title": "Page /users/me",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "me as alice",
+              "fullTitle": "Page /users/me me as alice",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie que le contenu de la page est bien celui de l'utilisateur courant\ncy.visit(`http://localhost:5173/users/me`, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\ncy.get(\"[data-test-username]\").should(\"contain.text\", \"alice\");\ncy.get(\"[data-test-product]\").should(\"have.length\", 7);",
+              "err": {},
+              "uuid": "2156391c-43af-4036-b0ac-4e776dd8a806",
+              "parentUUID": null,
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "me as bob",
+              "fullTitle": "Page /users/me me as bob",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie que le contenu de la page est bien celui de l'utilisateur courant\ncy.visit(`http://localhost:5173/users/me`, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.bobToken);\n  }\n});\ncy.get(\"[data-test-username]\").should(\"contain.text\", \"bob\");\ncy.get(\"[data-test-product]\").should(\"have.length\", 3);",
+              "err": {},
+              "uuid": "f7f124fa-b329-4a59-ab12-2ffaae576a47",
+              "parentUUID": null,
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "me as admin",
+              "fullTitle": "Page /users/me me as admin",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Vérifie que le contenu de la page est bien celui de l'utilisateur courant\ncy.visit(`http://localhost:5173/users/me`, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.adminToken);\n  }\n});\ncy.get(\"[data-test-username]\").should(\"contain.text\", \"admin\");",
+              "err": {},
+              "uuid": "5a480133-7cb1-429b-ba39-ccf9d3fe90a4",
+              "parentUUID": null,
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [],
+          "pending": [],
+          "skipped": [
+            "2156391c-43af-4036-b0ac-4e776dd8a806",
+            "f7f124fa-b329-4a59-ab12-2ffaae576a47",
+            "5a480133-7cb1-429b-ba39-ccf9d3fe90a4"
+          ],
+          "duration": 0,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
