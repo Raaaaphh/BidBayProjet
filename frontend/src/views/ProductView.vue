@@ -89,8 +89,7 @@ function formatDate(date: string | number | Date) {
     <div class="row" data-test-product>
       <!-- Colonne de gauche : image et compte à rebours -->
       <div class="col-lg-4">
-        <img src="https://picsum.photos/id/250/512/512" alt="" class="img-fluid rounded mb-3"
-          data-test-product-picture />
+        <img :src="product?.pictureUrl" alt="" class="img-fluid rounded mb-3" data-test-product-picture />
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Compte à rebours</h5>
@@ -112,7 +111,7 @@ function formatDate(date: string | number | Date) {
             </h1>
           </div>
           <div class="col-lg-6 text-end">
-            <RouterLink :to="{ name: 'ProductEdition', params: { productId: 'TODO' } }" class="btn btn-primary"
+            <RouterLink :to="{ name: 'ProductEdition', params: { productId: product?.id } }" class="btn btn-primary"
               data-test-edit-product>
               Editer
             </RouterLink>
@@ -132,10 +131,10 @@ function formatDate(date: string | number | Date) {
         <ul>
           <li data-test-product-price>Prix de départ : {{ product?.originalPrice }} €</li>
           <li data-test-product-end-date>Date de fin : {{ new Date(product?.endDate as
-                string).toLocaleDateString('en-GB') }}</li>
+          string).toLocaleDateString('en-GB') }}</li>
           <li>
             Vendeur :
-            <router-link :to="{ name: 'User', params: { userId: 'TODO' } }" data-test-product-seller>
+            <router-link :to="{ name: 'User', params: { userId: product?.seller?.id } }" data-test-product-seller>
               {{ product?.seller?.username }}
             </router-link>
           </li>
