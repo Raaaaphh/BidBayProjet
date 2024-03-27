@@ -27,6 +27,10 @@ if (!isAuthenticated.value) {
   router.push({ name: "Login" });
 }
 
+function dateToInput(date: string): string {
+  return date.split("T")[0];
+}
+
 function getProduct() {
   fetch(`http://localhost:3000/api/products/${productId.value}`, {
     method: "GET",
@@ -44,6 +48,7 @@ function getProduct() {
     })
     .then((data) => {
       product = data;
+      product.endDate = dateToInput(product.endDate);
       loadingProduct.value = false;
     })
     .catch((error) => {
