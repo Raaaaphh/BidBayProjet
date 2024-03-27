@@ -12,37 +12,46 @@ let error = ref(false);
 let loading = ref(true);
 
 const productId = ref(route.params.productId);
+let product = ref<Product>();
 
-function getProduct(): Product | null | undefined {
+function getProduct(): void {
 
   if (!productId.value) {
-    return null;
+    error.value = true;
+    return;
   }
 
   console.log(productId.value);
 
-  fetch(`http://localhost:3000/api/products/${productId.value}`).then((response) => {
-    if (!response.ok) {
+  fetch(`http://localhost:3000/api/products/${productId.value}`)
+    .then(async (response) => {
+      if (!response.ok) {
+        error.value = true;
+        loading.value = false;
+        return null;
+      }
+      loading.value = false;
+      const responseData = await response.json();
+      console.log(responseData);
+      product.value = responseData;
+    })
+    .catch(error => {
+      console.error('Error fetching product:', error);
       error.value = true;
       loading.value = false;
-      return null;
-    }
-    loading.value = false;
-    console.log(response.json());
-    return response.json();
-  });
+    });
 }
 
 
 const countdown = computed(() => {
-  const product = getProduct();
+  getProduct();
 
   if (!product) {
     return "";
   }
 
 
-  const endDate = new Date(product.endDate).getTime();
+  const endDate = new Date(product.value?.endDate as string).getTime();
   const now = new Date().getTime();
   const diff = endDate - now;
 
@@ -80,8 +89,7 @@ function formatDate(date: string | number | Date) {
     <div class="row" data-test-product>
       <!-- Colonne de gauche : image et compte à rebours -->
       <div class="col-lg-4">
-        <img src="https://picsum.photos/id/250/512/512" alt="" class="img-fluid rounded mb-3"
-          data-test-product-picture />
+        <img :src="product?.pictureUrl" alt="" class="img-fluid rounded mb-3" data-test-product-picture />
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Compte à rebours</h5>
@@ -99,11 +107,11 @@ function formatDate(date: string | number | Date) {
         <div class="row">
           <div class="col-lg-6">
             <h1 class="mb-3" data-test-product-name>
-              Appareil photo argentique
+              {{ product?.name }}
             </h1>
           </div>
           <div class="col-lg-6 text-end">
-            <RouterLink :to="{ name: 'ProductEdition', params: { productId: 'TODO' } }" class="btn btn-primary"
+            <RouterLink :to="{ name: 'ProductEdition', params: { productId: product?.id } }" class="btn btn-primary"
               data-test-edit-product>
               Editer
             </RouterLink>
@@ -116,18 +124,18 @@ function formatDate(date: string | number | Date) {
 
         <h2 class="mb-3">Description</h2>
         <p data-test-product-description>
-          Appareil photo argentique classique, parfait pour les amateurs de
-          photographie
+          {{ product?.description }}
         </p>
 
         <h2 class="mb-3">Informations sur l'enchère</h2>
         <ul>
-          <li data-test-product-price>Prix de départ : 17 €</li>
-          <li data-test-product-end-date>Date de fin : 20 juin 2026</li>
+          <li data-test-product-price>Prix de départ : {{ product?.originalPrice }} €</li>
+          <li data-test-product-end-date>Date de fin : {{ new Date(product?.endDate as
+          string).toLocaleDateString('en-GB') }}</li>
           <li>
             Vendeur :
-            <router-link :to="{ name: 'User', params: { userId: 'TODO' } }" data-test-product-seller>
-              alice
+            <router-link :to="{ name: 'User', params: { userId: product?.seller?.id } }" data-test-product-seller>
+              {{ product?.seller?.username }}
             </router-link>
           </li>
         </ul>
