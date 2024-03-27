@@ -5,17 +5,31 @@
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["es2021", "dom"],
-    "types": ["cypress", "node", "vite/client"],
+    "lib": [
+      "es2021",
+      "dom"
+    ],
+    "types": [
+      "cypress",
+      "node",
+      "vite/client"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "allowJs": true,
     "checkJs": false
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.vue",
+    "**/*.ts"
+  ]
 }
