@@ -17,7 +17,8 @@ let product = ref();
 getProduct();
 
 function getProduct(): void {
-
+  loading.value = true;
+  error.value = "";
   if (!productId.value) {
     error.value = "Aucun produit n'a été trouvé.";
     router.push({ name: "Home" });
@@ -77,6 +78,63 @@ function deleteProduct(): void {
     })
     .catch(() => {
       error.value = "Une erreur est survenue lors de la suppression du produit.";
+    });
+}
+
+function deleteBid(bidId: string): void {
+  if (!product.value) {
+    return;
+  }
+
+  fetch(`http://localhost:3000/api/bids/${bidId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          error.value = "Vous n'êtes pas autorisé à supprimer cette offre.";
+          return;
+        }
+        error.value = "L'offre n'existe pas ou une erreur est survenue lors de la suppression.";
+        return;
+      }
+      getProduct();
+    })
+    .catch(() => {
+      error.value = "Une erreur est survenue lors de la suppression de l'offre.";
+    });
+}
+
+function submitBid(event: Event): void {
+  if (!product.value) {
+    return;
+  }
+
+  fetch(`http://localhost:3000/api/products/${product.value.id}/bids`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token.value}`,
+    },
+    body: JSON.stringify({ price: price.value }),
+  })
+    .then(async (response) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          error.value = "Vous n'êtes pas autorisé à enchérir sur ce produit.";
+          return;
+        }
+        const responseData = await response.json();
+        error.value = responseData.details;
+        return;
+      }
+      getProduct();
+    })
+    .catch(() => {
+      error.value = "Une erreur est survenue lors de l'enchère.";
     });
 }
 
@@ -194,7 +252,8 @@ function formatDate(date: string | number | Date) {
               <td data-test-bid-price>{{ bid.price }} €</td>
               <td data-test-bid-date>{{ formatDate(bid.createdAt) }}</td>
               <td>
-                <button class="btn btn-danger btn-sm" data-test-delete-bid v-if="canEditBid(bid.bidderId)">
+                <button class="btn btn-danger btn-sm" data-test-delete-bid @click="deleteBid(bid.id)"
+                  v-if="canEditBid(bid.bidderId)">
                   Supprimer
                 </button>
               </td>
@@ -203,7 +262,7 @@ function formatDate(date: string | number | Date) {
         </table>
         <p data-test-no-bids v-if="product.bids?.length === 0">Aucune offre pour le moment</p>
 
-        <form data-test-bid-form>
+        <form data-test-bid-form @submit.prevent="submitBid">
           <div class="form-group">
             <label for="bidAmount">Votre offre :</label>
             <input type="number" class="form-control" id="bidAmount" data-test-bid-form-price v-model="price" />
