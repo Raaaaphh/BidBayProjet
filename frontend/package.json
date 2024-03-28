@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "test": "cypress open",
     "test-report": "rm -rf cypress/results mochawesome-report && cypress run --browser chrome || true && npx mochawesome-merge 'cypress/results/mochawesome_0*.json' > ./cypress/results/mochawesome_all.json && npx marge -f mochawesome ./cypress/results/mochawesome_all.json",
-    "test-report-windows": "rm -rf cypress/results mochawesome-report && cypress run --browser chrome || exit 0 && npx mochawesome-merge \"cypress\\results\\mochawesome_0*.json\" > .\\cypress\\results\\mochawesome_all.json && npx marge -f mochawesome .\\cypress\\results\\mochawesome_all.json\n"
+    "test-report-windows": "cypress run --browser chrome || exit 0 && npx mochawesome-merge \"cypress\\results\\mochawesome_0*.json\" > .\\cypress\\results\\mochawesome_all.json && npx marge -f mochawesome .\\cypress\\results\\mochawesome_all.json\n"
   },
   "dependencies": {
     "express": "^4.18.3",
