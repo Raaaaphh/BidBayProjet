@@ -14,9 +14,16 @@ const loading = ref(true);
 const error = ref();
 
 let userId = computed(() => route.params.userId);
-
+let realUserId = userId.value;
+if (userId.value === "me") {
+  if (userData.value) {
+    realUserId = userData.value.id;
+  } else {
+    router.push({ name: "Login" });
+  }
+}
 function fetchUser() {
-  fetch(`http://localhost:3000/api/users/${userId.value}`)
+  fetch(`http://localhost:3000/api/users/${realUserId}`)
     .then((response) => response.json())
     .then((data) => {
       user.value = data;
