@@ -16,6 +16,8 @@ async function fetchProducts() {
   fetch("http://localhost:3000/api/products").then(async (res) => {
     products.value = await res.json()
     loading.value = false;
+
+    sortProducts('name');
   }).catch(() => {
     error.value = true;
     loading.value = false;
@@ -115,7 +117,7 @@ fetchProducts();
             <p class="card-text" data-test-product-date>
               En cours jusqu'au {{ new Date(prod.endDate).toLocaleDateString('en-GB') }}
             </p>
-            <p class="card-text" data-test-product-price>Prix actuel : {{ prod.originalPrice }} €</p>
+            <p class="card-text" data-test-product-price>Prix de départ {{ prod.originalPrice }} €</p>
           </div>
         </div>
       </div>

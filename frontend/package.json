@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "dev:workaround": "node workaround-server/server.cjs",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
