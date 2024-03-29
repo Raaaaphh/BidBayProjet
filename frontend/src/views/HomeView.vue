@@ -117,7 +117,7 @@ fetchProducts();
             <p class="card-text" data-test-product-date>
               En cours jusqu'au {{ new Date(prod.endDate).toLocaleDateString('en-GB') }}
             </p>
-            <p class="card-text" data-test-product-price>Prix de départ {{ prod.originalPrice }} €</p>
+            <p class="card-text" data-test-product-price>Prix de départ :{{ prod.originalPrice }} €</p>
           </div>
         </div>
       </div>

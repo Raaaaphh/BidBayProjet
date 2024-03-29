@@ -496,10 +496,10 @@ describe("POST /api/products/:productId/bids", () => {
       method: "POST",
       url: "http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids",
       headers: {
-        Authorization: `Bearer ${aliceToken}`,
+        Authorization: `Bearer ${bobToken}`,
       },
       body: {
-        price: 42,
+        price: 250,
       },
     }).then((response) => {
       // Assert that the response is as expected
@@ -519,7 +519,7 @@ describe("POST /api/products/:productId/bids", () => {
       method: "POST",
       url: "http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids",
       headers: {
-        Authorization: `Bearer ${aliceToken}`,
+        Authorization: `Bearer ${bobToken}`,
       },
       body: {
         // price: 42, missing
@@ -537,10 +537,10 @@ describe("POST /api/products/:productId/bids", () => {
       method: "POST",
       url: "http://localhost:3000/api/products/a0f7c522-78f8-442e-a55d-642cfe566634/bids",
       headers: {
-        Authorization: `Bearer ${aliceToken}`,
+        Authorization: `Bearer ${bobToken}`,
       },
       body: {
-        price: 42,
+        price: 250,
       },
     }).then((response) => {
       expect(response.status).to.be.eq(201);
