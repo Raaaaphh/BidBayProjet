@@ -118,9 +118,11 @@ fetchProducts();
               </RouterLink>
             </p>
             <p class="card-text" data-test-product-date>
-              En cours jusqu'au {{ new Date(prod.endDate).toLocaleDateString('en-GB') }}
-            </p>
-            <p class="card-text" data-test-product-price>Prix de départ :{{ prod.originalPrice }} €</p>
+              {{ new Date(prod.endDate).toLocaleDateString('en-GB') < new Date().toLocaleDateString('en-GB') ? 'Terminé'
+                : "En cours jusqu'au " + new Date(prod.endDate).toLocaleDateString('en-GB') }} </p>
+                <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
+                  {{ prod.bids?.length === 0 ? 'Prix départ ' + prod.originalPrice + '€' : 'Prix actuel : '
+                + prod.bids[prod.bids.length - 1].price + '€' }}</p>
           </div>
         </div>
       </div>
