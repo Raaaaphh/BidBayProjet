@@ -11,7 +11,7 @@ const route = useRoute();
 
 const user = ref<User>();
 const loading = ref(true);
-const error = ref();
+const error = ref("");
 
 let userId = computed(() => route.params.userId);
 let realUserId = userId.value;
@@ -24,14 +24,18 @@ if (userId.value === "me") {
 }
 function fetchUser() {
   fetch(`http://localhost:3000/api/users/${realUserId}`)
-    .then((response) => response.json())
-    .then((data) => {
+    .then(async (response) => {
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+
       user.value = data;
       loading.value = false;
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      error.value = error;
+    .catch(() => {
+      console.log("error");
+      error.value = "Une erreur est survenue lors du chargement de l'utilisateur.";
       loading.value = false;
     });
 }
@@ -56,7 +60,7 @@ const formatDate = (date: Date) => {
     <div class="alert alert-danger mt-3" data-test-error v-if="error">
       {{ error }}
     </div>
-    <div data-test-view>
+    <div data-test-view v-if="!loading && !error">
       <div class="row">
         <div class="col-lg-6">
           <h2>Produits</h2>
