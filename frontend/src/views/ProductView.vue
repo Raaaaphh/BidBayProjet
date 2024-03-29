@@ -2,46 +2,58 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
+import { Product } from "@/interfaces/product";
 
 const { isAuthenticated, isAdmin, userData, token } = useAuthStore();
 
 const route = useRoute();
 const router = useRouter();
-let error = ref("");
+let highestBid = ref(0);
+let errorMessage = ref("");
 let loading = ref(true);
 let price = ref(0);
+let countdown = ref("");
 
 const productId = ref(route.params.productId);
-let product = ref();
+let product = ref<Product>();
 
-getProduct();
 
 function getProduct(): void {
   loading.value = true;
-  error.value = "";
+  errorMessage.value = "";
   if (!productId.value) {
-    error.value = "Aucun produit n'a été trouvé.";
+    errorMessage.value = "Aucun produit n'a été trouvé.";
     router.push({ name: "Home" });
   }
 
   fetch(`http://localhost:3000/api/products/${productId.value}`)
     .then(async (response) => {
+      loading.value = false;
       if (!response.ok) {
         if (response.status === 404) {
-          error.value = "Le produit n'existe pas.";
-          loading.value = false;
-          return null;
+         throw new Error("Le produit n'existe pas.");
         }
-        error.value = "Une erreur est survenue lors du chargement du produit.";
-        loading.value = false;
-        return null;
+        throw new Error("Une erreur est survenue lors de la récupération du produit.");
       }
-      loading.value = false;
+
+
       const responseData = await response.json();
       product.value = responseData;
+
+      if (product.value?.bids){
+        for (const bid of product.value.bids) {
+          if (bid.price > highestBid.value) {
+            highestBid.value = bid.price;
+          }
+        }
+      }
+
+      price.value = highestBid.value + 1;
+
+      refreshCountdown();
     })
-    .catch(error => {
-      error.value = true;
+    .catch((error) => {
+      errorMessage.value = error.message;
       loading.value = false;
     });
 }
@@ -68,16 +80,14 @@ function deleteProduct(): void {
     .then(async (response) => {
       if (!response.ok) {
         if (response.status === 401) {
-          error.value = "Vous n'êtes pas autorisé à supprimer ce produit.";
-          return;
+          throw new Error("Vous n'êtes pas autorisé à supprimer ce produit.");
         }
-        error.value = "Le produit n'existe pas ou une erreur est survenue lors de la suppression.";
-        return;
+        throw new Error("Le produit n'existe pas ou une erreur est survenue lors de la suppression.");
       }
       router.push({ name: "Home" });
     })
-    .catch(() => {
-      error.value = "Une erreur est survenue lors de la suppression du produit.";
+    .catch((error) => {
+      errorMessage.value = error.message;
     });
 }
 
@@ -95,16 +105,14 @@ function deleteBid(bidId: string): void {
     .then(async (response) => {
       if (!response.ok) {
         if (response.status === 401) {
-          error.value = "Vous n'êtes pas autorisé à supprimer cette offre.";
-          return;
+          throw new Error("Vous n'êtes pas autorisé à supprimer cette offre.");
         }
-        error.value = "L'offre n'existe pas ou une erreur est survenue lors de la suppression.";
-        return;
+        throw new Error("L'offre n'existe pas ou une erreur est survenue lors de la suppression.");
       }
       getProduct();
     })
-    .catch(() => {
-      error.value = "Une erreur est survenue lors de la suppression de l'offre.";
+    .catch((error) => {
+      errorMessage.value = error.message;
     });
 }
 
@@ -124,40 +132,38 @@ function submitBid(event: Event): void {
     .then(async (response) => {
       if (!response.ok) {
         if (response.status === 401) {
-          error.value = "Vous n'êtes pas autorisé à enchérir sur ce produit.";
-          return;
+          throw new Error("Vous devez être connecté pour enchérir.");
         }
         const responseData = await response.json();
-        error.value = responseData.details;
-        return;
+        throw new Error(responseData.details);
       }
       getProduct();
     })
-    .catch(() => {
-      error.value = "Une erreur est survenue lors de l'enchère.";
+    .catch((error) => {
+      errorMessage.value = error.message;
     });
 }
 
-const countdown = computed(() => {
+function refreshCountdown() {
   if (!product) {
     return "";
   }
-
 
   const endDate = new Date(product.value?.endDate as string).getTime();
   const now = new Date().getTime();
   const diff = endDate - now;
 
   if (diff <= 0) {
-    return "Vente terminée";
+    countdown.value = "Terminé";
+    return;
   }
 
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  return `${days} jours, ${hours} heures, ${minutes} minutes et ${seconds} secondes`;
-});
+  countdown.value = `Temps restant : ${days}j ${hours}h ${minutes}min ${seconds}s`;
+};
 
 /**
  * @param {number|string|Date|VarDate} date
@@ -166,6 +172,15 @@ function formatDate(date: string | number | Date) {
   const options = { year: "numeric", month: "long", day: "numeric" };
   return new Date(date).toLocaleDateString("fr-FR", options as Intl.DateTimeFormatOptions);
 }
+
+getProduct();
+
+while (true) {
+  setInterval(refreshCountdown, 1000);
+  break;
+}
+
+
 </script>
 
 <template>
@@ -176,10 +191,10 @@ function formatDate(date: string | number | Date) {
       </div>
     </div>
 
-    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error">
-      {{ error }}
+    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage">
+      {{ errorMessage }}
     </div>
-    <div class="row" data-test-product v-if="product">
+    <div class="row" data-test-product v-if="product && !errorMessage && !loading">
       <!-- Colonne de gauche : image et compte à rebours -->
       <div class="col-lg-4">
         <img :src="product?.pictureUrl" alt="" class="img-fluid rounded mb-3" data-test-product-picture />
@@ -189,7 +204,7 @@ function formatDate(date: string | number | Date) {
           </div>
           <div class="card-body">
             <h6 class="card-subtitle mb-2 text-muted" data-test-countdown>
-              Temps restant : {{ countdown }}
+              {{ countdown }}
             </h6>
           </div>
         </div>
@@ -204,7 +219,7 @@ function formatDate(date: string | number | Date) {
             </h1>
           </div>
           <div class="col-lg-6 text-end">
-            <RouterLink :to="{ name: 'ProductEdition', params: { productId: product?.id } }" class="btn btn-primary"
+            <RouterLink :to="{ name: 'ProductEdition', params: { productId: product.id } }" class="btn btn-primary"
               data-test-edit-product v-if="canDeleteProduct()">
               Editer
             </RouterLink>
@@ -222,12 +237,12 @@ function formatDate(date: string | number | Date) {
 
         <h2 class="mb-3">Informations sur l'enchère</h2>
         <ul>
-          <li data-test-product-price>Prix de départ : {{ product?.originalPrice }} €</li>
-          <li data-test-product-end-date>Date de fin : {{ formatDate(product?.endDate) }}</li>
+          <li data-test-product-price>Prix de départ : {{ product.originalPrice }} €</li>
+          <li data-test-product-end-date>Date de fin : {{ formatDate(product.endDate) }}</li>
           <li>
             Vendeur :
-            <router-link :to="{ name: 'User', params: { userId: product?.seller?.id } }" data-test-product-seller>
-              {{ product?.seller?.username }}
+            <router-link :to="{ name: 'User', params: { userId: 'product.seller?.id' } }" data-test-product-seller>
+              {{ product.seller?.username }}
             </router-link>
           </li>
         </ul>
@@ -270,7 +285,7 @@ function formatDate(date: string | number | Date) {
               Le montant doit être supérieur à 10 €.
             </small>
           </div>
-          <button type="submit" class="btn btn-primary" :disabled="!isAuthenticated || price <= 10"
+          <button type="submit" class="btn btn-primary" :disabled="!isAuthenticated || price <= highestBid"
             data-test-submit-bid>
             Enchérir
           </button>
