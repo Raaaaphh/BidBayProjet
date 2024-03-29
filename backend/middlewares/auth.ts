@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../consts/secret'
-import {Request, Response, NextFunction} from "express";
-import {Token} from "../types/types";
+import { Request, Response, NextFunction } from "express";
+import { Token } from "../types/types";
 
-const authMiddleware = (req: Request & {user?: Token}, res: Response, next: NextFunction) => {
+const authMiddleware = (req: Request & { user?: Token }, res: Response, next: NextFunction) => {
   // Récupération du token d'authentification depuis le header Authorization
   const authHeader = req.headers.authorization
   const token = authHeader && authHeader.split(' ')[1]

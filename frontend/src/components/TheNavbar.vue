@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
 
 const { isAuthenticated, logout, username } = useAuthStore();
+
 </script>
 
 <template>
@@ -15,15 +16,12 @@ const { isAuthenticated, logout, username } = useAuthStore();
             BidBay
           </li>
           <li class="nav-item">
-            <RouterLink class="nav-link active" :to="{ name: 'Home' }">
+            <RouterLink class="nav-link" :to="{ name: 'Home' }" v-on:click="">
               Accueil
             </RouterLink>
           </li>
           <li class="nav-item" v-if="isAuthenticated">
-            <RouterLink
-              class="nav-link"
-              :to="{ name: 'User', params: { userId: 'me' } }"
-            >
+            <RouterLink class="nav-link" :to="{ name: 'User', params: { userId: 'me' } }">
               Mon compte
             </RouterLink>
           </li>

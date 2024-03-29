@@ -1,20 +1,53 @@
 <script setup lang="ts">
+import { Product } from "@/interfaces/product";
+//import { get } from "cypress/types/lodash";
 import { ref, computed } from "vue";
 
-const loading = ref(false);
-const error = ref(false);
+const loading = ref(true);
+const errorMessage = ref("");
+let products = ref<Product[]>([]);
+let var_input = ref("");
+let sort = ref("nom");
 
 async function fetchProducts() {
   loading.value = true;
-  error.value = false;
+  errorMessage.value = "";
 
-  try {
-  } catch (e) {
-    error.value = true;
-  } finally {
+  fetch("http://localhost:3000/api/products").then(async (res) => {
+    if (!res.ok) {
+      throw new Error();
+    }
+    products.value = await res.json()
     loading.value = false;
+
+    sortProducts('name');
+  }).catch(() => {
+    errorMessage.value = "Une erreur est survenue lors du chargement des produits.";
+    loading.value = false;
+  });
+
+}
+
+const filteredProducts = computed(() => {
+  if (!products.value) {
+    return [];
+  }
+
+  return products.value.filter((prod) => {
+    return prod.name.toLowerCase().includes(var_input.value.toLowerCase());
+  });
+});
+
+function sortProducts(type: string) {
+  if (type === 'price') {
+    products.value = products.value?.sort((a, b) => a.originalPrice - b.originalPrice);
+    sort.value = 'prix';
+  } else {
+    products.value = products.value?.sort((a, b) => a.name.localeCompare(b.name));
+    sort.value = 'nom';
   }
 }
+
 
 fetchProducts();
 </script>
@@ -28,31 +61,22 @@ fetchProducts();
         <form>
           <div class="input-group">
             <span class="input-group-text">Filtrage</span>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Filtrer par nom"
-              data-test-filter
-            />
+            <input type="text" class="form-control" placeholder="Filtrer par nom" data-test-filter
+              v-model="var_input" />
           </div>
         </form>
       </div>
       <div class="col-md-6 text-end">
         <div class="btn-group">
-          <button
-            type="button"
-            class="btn btn-primary dropdown-toggle"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            data-test-sorter
-          >
-            Trier par nom
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"
+            data-test-sorter>
+            Trier par {{ sort }}
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li>
+            <li v-on:click="sortProducts('name')">
               <a class="dropdown-item" href="#"> Nom </a>
             </li>
-            <li>
+            <li v-on:click="sortProducts('price')">
               <a class="dropdown-item" href="#" data-test-sorter-price>
                 Prix
               </a>
@@ -62,50 +86,43 @@ fetchProducts();
       </div>
     </div>
 
-    <div class="text-center mt-4" data-test-loading>
+    <div class="text-center mt-4" data-test-loading v-if="loading">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Chargement...</span>
       </div>
     </div>
 
-    <div class="alert alert-danger mt-4" role="alert" data-test-error>
-      Une erreur est survenue lors du chargement des produits.
+    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage">
+      {{errorMessage}}
     </div>
-    <div class="row">
-      <div class="col-md-4 mb-4" v-for="i in 10" data-test-product :key="i">
+    <div class="row" v-if="products.length > 0">
+      <div class="col-md-4 mb-4" v-for="prod in filteredProducts" data-test-product :key="prod.id">
         <div class="card">
-          <RouterLink :to="{ name: 'Product', params: { productId: 'TODO' } }">
-            <img
-              src="https://picsum.photos/id/403/512/512"
-              data-test-product-picture
-              class="card-img-top"
-            />
+          <RouterLink :to="{ name: 'Product', params: { productId: prod.id } }">
+            <img :src="prod.pictureUrl" data-test-product-picture class="card-img-top" />
           </RouterLink>
           <div class="card-body">
             <h5 class="card-title">
-              <RouterLink
-                data-test-product-name
-                :to="{ name: 'Product', params: { productId: 'TODO' } }"
-              >
-                Machine à écrire
+              <RouterLink data-test-product-name :to="{ name: 'Product', params: { productId: prod.id } }">
+                {{ prod.name }}
               </RouterLink>
             </h5>
             <p class="card-text" data-test-product-description>
-              Machine à écrire vintage en parfait état de fonctionnement
+              {{ prod.description }}
             </p>
             <p class="card-text">
               Vendeur :
-              <RouterLink
-                data-test-product-seller
-                :to="{ name: 'User', params: { userId: 'TODO' } }"
-              >
-                alice
+              <RouterLink v-if="prod.seller" data-test-product-seller
+                :to="{ name: 'User', params: { userId: prod.seller.id } }">
+                {{ prod.seller.username }}
               </RouterLink>
             </p>
             <p class="card-text" data-test-product-date>
-              En cours jusqu'au 05/04/2026
-            </p>
-            <p class="card-text" data-test-product-price>Prix actuel : 42 €</p>
+              {{ new Date(prod.endDate) < new Date() ? 'Terminé'
+                : "En cours jusqu'au " + new Date(prod.endDate).toLocaleDateString('en-GB') }} </p>
+            <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
+                  {{ prod.bids?.length === 0 ? 'Prix de départ ' + prod.originalPrice + ' €' : 'Prix actuel '
+                + prod.bids[prod.bids.length - 1].price + ' €' }}</p>
           </div>
         </div>
       </div>

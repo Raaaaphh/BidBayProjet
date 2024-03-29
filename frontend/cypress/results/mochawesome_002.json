@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-03-29T11:07:25.080Z",
+    "end": "2024-03-29T11:07:28.090Z",
+    "duration": 3010,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "40171c36-3c6f-4221-9cff-0bbacfe10b3d",
+      "title": "",
+      "fullFile": "cypress\\e2e\\frontend\\add-product.cy.js",
+      "file": "cypress\\e2e\\frontend\\add-product.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "8a093e1f-15ac-47b8-bd33-f97940a90bce",
+          "title": "Page /products/add",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "post product",
+              "fullTitle": "Page /products/add post product",
+              "timedOut": null,
+              "duration": 964,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Test le scénario d'un ajout de produit réussi\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\").as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.wait(\"@postProduct\").then(interception => {\n    expect(interception.response.statusCode).to.eq(201);\n    const id = interception.response.body.id;\n    cy.url().should(\"contain\", `/products/${id}`);\n  });\n});",
+              "err": {},
+              "uuid": "ed809620-cf54-47fd-8199-41ceee7a0b98",
+              "parentUUID": "8a093e1f-15ac-47b8-bd33-f97940a90bce",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "display spinner",
+              "fullTitle": "Page /products/add display spinner",
+              "timedOut": null,
+              "duration": 182,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Test la présence d'un spinner lors de l'envoi de la requête\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\", {\n    delay: 2000\n  }).as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.get(\"[data-test-submit]\").should(\"have.attr\", \"disabled\");\n  cy.get(\"[data-test-spinner]\").should(\"exist\");\n});",
+              "err": {},
+              "uuid": "a383542e-847e-4a3c-a960-932e6eeb4177",
+              "parentUUID": "8a093e1f-15ac-47b8-bd33-f97940a90bce",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "display error",
+              "fullTitle": "Page /products/add display error",
+              "timedOut": null,
+              "duration": 200,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Note : Test le scénario d'un ajout de produit avec un échec\ncy.visit(url, {\n  onBeforeLoad: function (window) {\n    window.localStorage.setItem(\"token\", _tokens.aliceToken);\n  }\n});\ncy.get(\"[data-test-error]\").should(\"not.exist\");\n(0, _orm.createProduct)().then(({\n  originalProduct,\n  product\n}) => {\n  cy.get(\"[data-test-product-name]\").type(product.name);\n  cy.get(\"[data-test-product-description]\").type(product.description);\n  cy.get(\"[data-test-product-category]\").type(product.category);\n  cy.get(\"[data-test-product-price]\").type(product.originalPrice);\n  cy.get(\"[data-test-product-picture]\").type(\"{selectAll}{del}\");\n  cy.get(\"[data-test-product-picture]\").type(product.pictureUrl);\n  cy.get(\"[data-test-product-end-date]\").type((0, _automate.prepareDateToType)(originalProduct.endDate));\n  cy.intercept(\"POST\", \"http://localhost:3000/api/products\", {\n    statusCode: 500\n  }).as(\"postProduct\");\n  cy.get(\"[data-test-submit]\").click();\n  cy.get(\"[data-test-error]\").should(\"exist\");\n});",
+              "err": {},
+              "uuid": "95becdfe-2c15-468e-a125-dc70a91d1937",
+              "parentUUID": "8a093e1f-15ac-47b8-bd33-f97940a90bce",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ed809620-cf54-47fd-8199-41ceee7a0b98",
+            "a383542e-847e-4a3c-a960-932e6eeb4177",
+            "95becdfe-2c15-468e-a125-dc70a91d1937"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1346,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
