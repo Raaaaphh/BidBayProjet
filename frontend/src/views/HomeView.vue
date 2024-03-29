@@ -4,22 +4,25 @@ import { Product } from "@/interfaces/product";
 import { ref, computed } from "vue";
 
 const loading = ref(true);
-const error = ref(false);
+const errorMessage = ref("");
 let products = ref<Product[]>();
 let var_input = ref("");
 let sort = ref("nom");
 
 async function fetchProducts() {
   loading.value = true;
-  error.value = false;
+  errorMessage.value = "";
 
   fetch("http://localhost:3000/api/products").then(async (res) => {
+    if (!res.ok) {
+      throw new Error("Une erreur est survenue lors du chargement des produits.");
+    }
     products.value = await res.json()
     loading.value = false;
 
     sortProducts('name');
   }).catch(() => {
-    error.value = true;
+    errorMessage.value = "Une erreur est survenue lors du chargement des produits.";
     loading.value = false;
   });
 
@@ -89,8 +92,8 @@ fetchProducts();
       </div>
     </div>
 
-    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="error">
-      Une erreur est survenue lors du chargement des produits.
+    <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage">
+      {{errorMessage}}
     </div>
     <div class="row">
       <div class="col-md-4 mb-4" v-for="prod in filteredProducts" data-test-product :key="prod.id">
