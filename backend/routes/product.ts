@@ -21,7 +21,7 @@ router.get('/api/products', async (req, res, next) => {
       ],
     }
   );
-  res.status(500).json(products);
+  res.status(200).json(products);
 })
 
 router.get('/api/products/:productId', async (req, res) => {

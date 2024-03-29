@@ -5,7 +5,7 @@ import { ref, computed } from "vue";
 
 const loading = ref(true);
 const errorMessage = ref("");
-let products = ref<Product[]>();
+let products = ref<Product[]>([]);
 let var_input = ref("");
 let sort = ref("nom");
 
@@ -15,7 +15,7 @@ async function fetchProducts() {
 
   fetch("http://localhost:3000/api/products").then(async (res) => {
     if (!res.ok) {
-      throw new Error("Une erreur est survenue lors du chargement des produits.");
+      throw new Error();
     }
     products.value = await res.json()
     loading.value = false;
@@ -95,7 +95,7 @@ fetchProducts();
     <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage">
       {{errorMessage}}
     </div>
-    <div class="row">
+    <div class="row" v-if="products.length > 0">
       <div class="col-md-4 mb-4" v-for="prod in filteredProducts" data-test-product :key="prod.id">
         <div class="card">
           <RouterLink :to="{ name: 'Product', params: { productId: prod.id } }">
@@ -118,11 +118,11 @@ fetchProducts();
               </RouterLink>
             </p>
             <p class="card-text" data-test-product-date>
-              {{ new Date(prod.endDate).toLocaleDateString('en-GB') < new Date().toLocaleDateString('en-GB') ? 'Terminé'
+              {{ new Date(prod.endDate) < new Date() ? 'Terminé'
                 : "En cours jusqu'au " + new Date(prod.endDate).toLocaleDateString('en-GB') }} </p>
-                <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
-                  {{ prod.bids?.length === 0 ? 'Prix départ ' + prod.originalPrice + '€' : 'Prix actuel : '
-                + prod.bids[prod.bids.length - 1].price + '€' }}</p>
+            <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
+                  {{ prod.bids?.length === 0 ? 'Prix de départ ' + prod.originalPrice + ' €' : 'Prix actuel '
+                + prod.bids[prod.bids.length - 1].price + ' €' }}</p>
           </div>
         </div>
       </div>
