@@ -61,9 +61,9 @@ router.post('/api/products', authMiddleware, (req, res) => {
   if (!req.user) return res.status(401).send('Unauthorized');
   const body = req.body;
 
-  if (body.originalPrice < 10) return res.status(400).send({
+  if (body.originalPrice === undefined) return res.status(400).send({
     error: 'Invalid or missing fields',
-    details: 'originalPrice must be at least 10'
+    details: 'originalPrice is required'
   })
 
   if (body.name === undefined || body.name.length > 255) return res.status(400).send({

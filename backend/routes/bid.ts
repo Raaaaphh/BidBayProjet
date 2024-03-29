@@ -58,11 +58,12 @@ router.post('/api/products/:productId/bids', authMiddleware, async (req, res) =>
   })
   const response = {
     id: bid.id,
-    productID: bid.productId,
+    productId: bid.productId,
     price: bid.price,
     date: bid.createdAt,
     bidderId: req.user.id
   }
+  console.log(response)
   res.status(201).json(response)
 })
 
