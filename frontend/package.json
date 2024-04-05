@@ -9,8 +9,9 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "test": "cypress open",
-    "test-report": "rm -rf cypress/results mochawesome-report && cypress run --browser chrome || true && npx mochawesome-merge 'cypress/results/mochawesome_0*.json' > ./cypress/results/mochawesome_all.json && npx marge -f mochawesome ./cypress/results/mochawesome_all.json",
-    "test-report-windows": "cypress run --browser chrome || exit 0 && npx mochawesome-merge \"cypress\\results\\mochawesome_0*.json\" > .\\cypress\\results\\mochawesome_all.json && npx marge -f mochawesome .\\cypress\\results\\mochawesome_all.json\n"
+    "test-report": "rm -rf cypress/results mochawesome-report && cypress run --browser chrome || true && npx mochawesome-merge 'cypress/results/mochawesome*.json' > ./cypress/results/all.json && npx marge -f mochawesome ./cypress/results/all.json",
+    "test-report-windows-run": "windows-report.cmd",
+    "test-report-windows-generate": "npx mochawesome-merge \"cypress\\results\\mochawesome*.json\" > \"cypress\\results\\all.json\" && npx marge -f mochawesome \"cypress\\results\\all.json\""
   },
   "dependencies": {
     "express": "^4.18.3",
