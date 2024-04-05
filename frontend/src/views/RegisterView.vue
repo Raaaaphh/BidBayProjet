@@ -67,59 +67,28 @@ const registerUser = async () => {
 
         <div class="mb-3">
           <label for="name" class="form-label">Nom d'utilisateur</label>
-          <input
-            v-model="name"
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            required
-          />
+          <input v-model="name" type="text" class="form-control" id="name" name="name" required />
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Adresse e-mail</label>
-          <input
-            v-model="email"
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-          />
+          <input v-model="email" type="email" class="form-control" id="email" name="email" required />
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Mot de passe</label>
-          <input
-            v-model="password"
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            required
-          />
+          <input v-model="password" type="password" class="form-control" id="password" name="password" required />
         </div>
         <div class="mb-3">
           <label for="repassword" class="form-label">
             Répéter le mot de passe
           </label>
-          <input
-            v-model="passwordConfirmation"
-            type="password"
-            class="form-control"
-            id="repassword"
-            name="repassword"
-            required
-          />
+          <input v-model="passwordConfirmation" type="password" class="form-control" id="repassword" name="repassword"
+            required />
           <div v-if="notMatchingPassword" class="text-danger">
             Les mots de passe ne correspondent pas.
           </div>
         </div>
         <div class="d-grid gap-2">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            :disabled="isSubmitting || notMatchingPassword"
-          >
+          <button type="submit" class="btn btn-primary" :disabled="isSubmitting || notMatchingPassword">
             {{ isSubmitting ? "En cours..." : "S'inscrire" }}
           </button>
         </div>

@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 import { useAuthStore } from "../store/auth";
 import { User } from "../interfaces/user";
-const { isAuthenticated, userData } = useAuthStore();
+const { userData } = useAuthStore();
 
 const router = useRouter();
 const route = useRoute();
@@ -73,9 +72,9 @@ const formatDate = (date: Date) => {
                 <div class="card-body">
                   <h5 class="card-title">
                     <RouterLink :to="{
-        name: 'Product',
-        params: { productId: prod.id },
-      }" data-test-product-name>
+                      name: 'Product',
+                      params: { productId: prod.id },
+                    }" data-test-product-name>
                       {{ prod.name }}
                     </RouterLink>
                   </h5>
@@ -104,9 +103,9 @@ const formatDate = (date: Date) => {
               <tr v-for="bid in user?.bids" :key="bid.id" data-test-bid>
                 <td>
                   <RouterLink :to="{
-        name: 'Product',
-        params: { productId: bid.productId },
-      }" data-test-bid-product>
+                    name: 'Product',
+                    params: { productId: bid.productId },
+                  }" data-test-bid-product>
                     {{ bid.product.name }}
                   </RouterLink>
                 </td>

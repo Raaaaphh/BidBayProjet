@@ -63,7 +63,13 @@ function editProduct() {
   error.value = "";
   loading.value = true;
 
-  if (product.name === "" || product.description === "" || product.category === "" || product.pictureUrl === "" || product.endDate === "") {
+  if (
+    product.name === "" ||
+    product.description === "" ||
+    product.category === "" ||
+    product.pictureUrl === "" ||
+    product.endDate === ""
+  ) {
     error.value = "Veuillez remplir tous les champs";
     return;
   }
@@ -95,7 +101,6 @@ function editProduct() {
       loading.value = false;
     });
 }
-
 </script>
 
 <template>
