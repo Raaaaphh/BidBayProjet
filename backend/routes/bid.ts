@@ -1,8 +1,7 @@
-import authMiddleware from '../middlewares/auth'
-import { Bid, Product } from '../orm/index.js'
-import express from 'express'
-import { getDetails } from '../validators/index.js'
-import { error } from 'console'
+import authMiddleware from '../middlewares/auth';
+import { Bid, Product } from '../orm/index.js';
+import express from 'express';
+import { getDetails } from '../validators/index.js';
 
 const router = express.Router()
 

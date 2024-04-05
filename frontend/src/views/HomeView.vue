@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Product } from "@/interfaces/product";
-//import { get } from "cypress/types/lodash";
 import { ref, computed } from "vue";
 
 const loading = ref(true);
@@ -93,7 +92,7 @@ fetchProducts();
     </div>
 
     <div class="alert alert-danger mt-4" role="alert" data-test-error v-if="errorMessage">
-      {{errorMessage}}
+      {{ errorMessage }}
     </div>
     <div class="row" v-if="products.length > 0">
       <div class="col-md-4 mb-4" v-for="prod in filteredProducts" data-test-product :key="prod.id">
@@ -118,11 +117,11 @@ fetchProducts();
               </RouterLink>
             </p>
             <p class="card-text" data-test-product-date>
-              {{ new Date(prod.endDate) < new Date() ? 'Terminé'
-                : "En cours jusqu'au " + new Date(prod.endDate).toLocaleDateString('en-GB') }} </p>
-            <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
+              {{ new Date(prod.endDate) < new Date() ? 'Terminé' : "En cours jusqu'au " + new
+                Date(prod.endDate).toLocaleDateString('en-GB') }} </p>
+                <p class="card-text" data-test-product-price v-if="prod.bids !== undefined">
                   {{ prod.bids?.length === 0 ? 'Prix de départ ' + prod.originalPrice + ' €' : 'Prix actuel '
-                + prod.bids[prod.bids.length - 1].price + ' €' }}</p>
+                    + prod.bids[prod.bids.length - 1].price + ' €' }}</p>
           </div>
         </div>
       </div>
