@@ -5,7 +5,7 @@ import { getDetails } from '../validators/index.js'
 
 const router = express.Router()
 
-router.get('/api/products', async (req, res, next) => {
+router.get('/api/products', async (req, res) => {
   const products = await Product.findAll(
     {
       include: [
@@ -163,7 +163,7 @@ router.delete('/api/products/:productId', authMiddleware, async (req, res) => {
 
   if (!req.user.admin && product.sellerId !== req.user.id) return res.status(403).send('Forbidden');
 
-  for (let bid of product.bids) {
+  for (const bid of product.bids) {
     await bid.destroy();
   }
 

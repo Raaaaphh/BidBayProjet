@@ -4,14 +4,14 @@ import { JWT_SECRET } from '../consts/secret.js'
 import express from 'express'
 import { getDetails } from '../validators/index.js'
 import { Request } from 'express';
-import {Token} from "../types/types";
+import { Token } from "../types/types";
 
 const router = express.Router()
 
 /**
  * Endpoint pour la création d'un nouvel utilisateur
  */
-router.post('/api/auth/register', async (req: Request<Record<string, never>, {access_token: string} | {error: string; details?: string[]}, {username: string; email: string; password: string}>, res) => {
+router.post('/api/auth/register', async (req: Request<Record<string, never>, { access_token: string } | { error: string; details?: string[] }, { username: string; email: string; password: string }>, res) => {
   try {
     const { username, email, password } = req.body
 
@@ -55,7 +55,7 @@ router.post('/api/auth/register', async (req: Request<Record<string, never>, {ac
   }
 })
 
-router.post('/api/auth/login', async (req: Request<Record<string, never>, {access_token: string} | {error: string; details?: string[]}, {email: string; password: string}>, res) => {
+router.post('/api/auth/login', async (req: Request<Record<string, never>, { access_token: string } | { error: string; details?: string[] }, { email: string; password: string }>, res) => {
   const { email, password } = req.body
 
   try {
