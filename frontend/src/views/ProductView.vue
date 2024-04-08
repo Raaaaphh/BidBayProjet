@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { useAuthStore } from "../store/auth";
 import { Product } from "@/interfaces/product";
@@ -31,7 +31,7 @@ function getProduct(): void {
       loading.value = false;
       if (!response.ok) {
         if (response.status === 404) {
-         throw new Error("Le produit n'existe pas.");
+          throw new Error("Le produit n'existe pas.");
         }
         throw new Error("Une erreur est survenue lors de la récupération du produit.");
       }
@@ -40,7 +40,7 @@ function getProduct(): void {
       const responseData = await response.json();
       product.value = responseData;
 
-      if (product.value?.bids){
+      if (product.value?.bids) {
         for (const bid of product.value.bids) {
           if (bid.price > highestBid.value) {
             highestBid.value = bid.price;
@@ -116,7 +116,7 @@ function deleteBid(bidId: string): void {
     });
 }
 
-function submitBid(event: Event): void {
+function submitBid(): void {
   if (!product.value) {
     return;
   }
@@ -145,7 +145,7 @@ function submitBid(event: Event): void {
 }
 
 function refreshCountdown() {
-  if (!product) {
+  if (!product.value) {
     return "";
   }
 
@@ -163,7 +163,7 @@ function refreshCountdown() {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
   countdown.value = `Temps restant : ${days}j ${hours}h ${minutes}min ${seconds}s`;
-};
+}
 
 /**
  * @param {number|string|Date|VarDate} date
@@ -175,7 +175,7 @@ function formatDate(date: string | number | Date) {
 
 getProduct();
 
-while (true) {
+for (; ;) {
   setInterval(refreshCountdown, 1000);
   break;
 }
@@ -257,8 +257,8 @@ while (true) {
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="bid in product.bids" :key="bid.id" v-if="product.bids !== undefined" data-test-bid>
+          <tbody v-if="product.bids !== undefined">
+            <tr v-for="bid in product.bids" :key="bid.id" data-test-bid>
               <td>
                 <router-link :to="{ name: 'User', params: { userId: bid.bidderId } }" data-test-bid-bidder>
                   {{ bid.bidder.username }}

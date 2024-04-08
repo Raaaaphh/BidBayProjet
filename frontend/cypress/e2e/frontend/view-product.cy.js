@@ -29,14 +29,14 @@ describe("Page /products/:productId", async () => {
       cy.get("[data-test-product-name]").should("have.text", product.name);
       cy.get("[data-test-product-description]").should(
         "have.text",
-        product.description
+        product.description,
       );
       cy.get("[data-test-product-picture]")
         .invoke("attr", "src")
         .should("eq", product.pictureUrl);
       cy.get("[data-test-product-price]").should(
         "contain.text",
-        product.originalPrice + " €"
+        product.originalPrice + " €",
       );
       cy.get("[data-test-product-end-date]").should(
         "contain.text",
@@ -44,7 +44,7 @@ describe("Page /products/:productId", async () => {
           year: "numeric",
           month: "long",
           day: "numeric",
-        })
+        }),
       );
       cy.get("[data-test-product-seller]")
         .should("have.text", "alice")
@@ -114,7 +114,7 @@ describe("Page /products/:productId", async () => {
             year: "numeric",
             month: "long",
             day: "numeric",
-          })
+          }),
         );
     });
   });
@@ -202,7 +202,7 @@ describe("Page /products/:productId", async () => {
 
       getProducts().then(({ products: productsAfterDeletion }) => {
         expect(productsBeforeDeletion.length).to.be.greaterThan(
-          productsAfterDeletion.length
+          productsAfterDeletion.length,
         );
       });
     });
@@ -270,7 +270,7 @@ describe("Page /products/:productId", async () => {
 
       getProduct(casserolesId).then(({ product: productAfterBidDeletion }) => {
         expect(productBeforeBidDeletion.bids.length).to.be.greaterThan(
-          productAfterBidDeletion.bids.length
+          productAfterBidDeletion.bids.length,
         );
       });
     });
@@ -327,7 +327,7 @@ describe("Page /products/:productId", async () => {
 
         cy.get("[data-test-bid-form-price]").should(
           "have.value",
-          bid.price + 1
+          bid.price + 1,
         );
       });
     });
@@ -348,7 +348,7 @@ describe("Page /products/:productId", async () => {
 
       getProduct(casserolesId).then(({ product: productAfterBidAddition }) => {
         expect(productAfterBidAddition.bids.length).greaterThan(
-          productBeforeBidAddition.bids.length
+          productBeforeBidAddition.bids.length,
         );
 
         const lastBid =
